@@ -1,0 +1,199 @@
+/* --- 1. Main Root Wrapper --- */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f4f6f9; /* Clean Light Gray Background එකක් */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* මුළු පිටුවම scroll වීම වළක්වයි */
+  box-sizing: border-box;
+}
+
+/* --- 2. Professional Full-Width Navbar --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 15px 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.navbar-brand {
+  font-size: 22px;
+  font-weight: 700;
+  color: #007bff;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+/* --- 3. Dashboard Content Area --- */
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* --- 4. Modern Professional Main Card --- */
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  width: 95%;
+  max-width: 1200px;
+  height: 83vh; /* 78vh සිට 83vh දක්වා වැඩි කරන ලදී */
+  padding: 40px;
+  display: flex;
+  gap: 50px;
+  box-sizing: border-box;
+}
+
+/* --- 5. Left Side: Profile Details --- */
+.profile-details-side {
+  flex: 1.2; /* වම් පැත්තට පොඩ්ඩක් වැඩි ඉඩක් */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.avatar-section {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.avatar-section h2 {
+  font-size: 28px;
+  color: #212529;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+/* Availability Badge */
+.status-badge {
+  border: none;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.status-badge:hover {
+  transform: scale(1.03);
+}
+
+/* Profile Info List */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.info-item {
+  font-size: 16px;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Modern Buttons */
+.edit-profile-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.edit-profile-btn:hover {
+  background-color: #0056b3;
+}
+
+/* --- 6. Right Side: Booking Requests --- */
+.booking-requests-side {
+  flex: 1;
+  border-left: 2px solid #f1f3f5;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* රික්වෙස්ට් ගොඩක් ආවොත් මේ කොටස විතරක් ස්ක්‍රෝල් වෙන්න */
+}
+
+.booking-requests-side h3 {
+  font-size: 22px;
+  color: #343a40;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Individual Booking Card */
+.booking-item-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.booking-item-card h4 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #212529;
+}
+
+.booking-item-card p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.btn-accept, .btn-reject {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-accept {
+  background-color: #28a745;
+  color: white;
+}
+.btn-reject {
+  background-color: #dc3545;
+  color: white;
+}
+.btn-accept:hover, .btn-reject:hover {
+  opacity: 0.9;
+}

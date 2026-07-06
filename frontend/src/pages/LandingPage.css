@@ -1,0 +1,67 @@
+.landing-container {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+}
+
+.shadow {
+  box-shadow: 0 1rem 3rem rgba(0,0,0,0.175) !important;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+}
+
+.rounded-4 {
+  border-radius: 1.5rem !important;
+}
+
+.landing-container {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+}
+
+/* රූපයට සහ බොත්තම් වලට මෝස්තර */
+.rounded-4 {
+  border-radius: 1.5rem !important;
+}
+
+.shadow {
+  box-shadow: 0 1rem 3rem rgba(0,0,0,0.175) !important;
+}
+
+/* බොත්තම් වල පෙනුම සඳහා */
+.btn-secondary {
+  background-color: #fff;
+  color: #0d6efd;
+  border: 1px solid #0d6efd;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+/* පෝරමය සඳහා මෝස්තර (Register Component එක ඇතුලේ තිබෙන card එක) */
+.register-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+.main-container {
+  display: flex;
+  width: 100vw;          /* Window එකේ සම්පූර්ණ පළලම ගන්නවා */
+  height: 100vh;         /* Window එකේ සම්පූර්ණ උසම ගන්නවා (Scroll වෙන්නේ නැති වෙන්න) */
+  overflow: hidden;      /* පිටතට යන කොටස් scroll වීම වළක්වන්න */
+  box-sizing: border-box;
+}

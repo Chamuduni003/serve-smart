@@ -1,0 +1,198 @@
+/* මුළු පිටුවේම Layout එක සකස් කිරීම */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ud-dashboard-container {
+  display: flex; /* වම් පැත්ත සහ දකුණු පැත්ත දෙකට බෙදීමට */
+  min-height: 100vh;
+  background-color: #f4f6f9;
+}
+
+/* ==========================================================================
+   1. වම් පැත්තේ තද අළු/කළු පාට Sidebar එක (Left Sidebar)
+   ========================================================================== */
+.ud-sidebar {
+  width: 260px;
+  background-color: #1a202c; /* තද අළු පාට */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 20px;
+  position: fixed; /* Sidebar එක එකම තැන රඳවා තැබීමට */
+  height: 100vh;
+}
+
+.ud-sidebar-brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #2d3748;
+  padding-bottom: 15px;
+}
+
+.ud-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.ud-menu-item {
+  color: #a0aec0;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.ud-menu-item:hover {
+  background-color: #2d3748;
+  color: #fff;
+}
+
+.ud-menu-item.ud-active {
+  background-color: #2d3748;
+  color: #fff;
+  font-weight: 600;
+}
+
+.ud-sidebar-footer {
+  margin-top: auto; /* Logout එක පහළටම තල්ලු කිරීමට */
+}
+
+.ud-logout {
+  color: #fc8181; /* රතු පැහැයට හුරු පාටක් */
+}
+
+.ud-logout:hover {
+  background-color: #fff5f5;
+  color: #e53e3e;
+}
+
+/* ==========================================================================
+   2. දකුණු පැත්තේ Main Content එක (Right Panel)
+   ========================================================================== */
+.ud-main-content {
+  flex: 1;
+  margin-left: 260px; /* Sidebar එකට ඉඩ තබා ඉතිරි කොටස ගැනීමට */
+  padding: 40px;
+}
+
+.ud-header {
+  margin-bottom: 40px;
+}
+
+.ud-header h1 {
+  font-size: 32px;
+  color: #1a202c;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.ud-header p {
+  color: #718096;
+  font-size: 16px;
+}
+
+/* Services Section */
+.ud-services-section h2 {
+  font-size: 22px;
+  color: #2d3748;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* කාඩ්ස් 4 Grid එකකට පෙළගැස්වීම (පේලි දෙකකට ලස්සනට එනවා) */
+.ud-services-grid {
+  display: flex;             /* Grid එක වෙනුවට Flexbox පාවිච්චි කරමු */
+  flex-direction: row;       /* එක පේළියට හරස් අතට පෙළගැස්වීම */
+  gap: 20px;                 /* කාඩ්ස් අතර පරතරය */
+  flex-wrap: wrap;           /* Screen එක මදි වුණොත් විතරක් ඊළඟ පේළියට යන්න */
+  align-items: stretch;
+  width: 100%;
+}
+
+/* සේවා කාඩ් එක (Service Card Style) */
+.ud-service-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 25px 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
+  
+  /* මේකෙන් කාඩ්ස් 4ම එක සමානව හරස් අතට බෙදිලා යනවා */
+  flex: 1;                   
+  min-width: 200px;          /* කුඩාම ප්‍රමාණය */
+  max-width: 250px;          /* උපරිම පළල සීමා කිරීම */
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ud-service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.ud-service-card h3 {
+  font-size: 20px;
+  color: #2d3748;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* නිල් පාට View බටන් එක */
+.ud-view-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 35px;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  max-width: 160px;
+  transition: background-color 0.2s ease;
+}
+
+.ud-view-btn:hover {
+  background-color: #0056b3;
+}
+/* Search result එකේ providersලාගේ grid එක */
+.ud-services-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+.ud-provider-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  min-width: 250px;
+  flex: 1;
+  max-width: 100%;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  border: 1px solid #edf2f7;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ud-no-results {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+}
