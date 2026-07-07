@@ -1,0 +1,129 @@
+/* 🔎 Search Row Section */
+.search-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+/* 📇 Landscape Provider Card Container */
+.provider-landscape-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 15px auto;
+  width: 100%;
+  max-width: 850px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.provider-landscape-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* 👤 Left Section: Profile Image */
+.card-avatar-section {
+  flex: 0 0 100px;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.provider-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+}
+
+/* 📝 Middle Section: Provider Details */
+.card-details-section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.provider-name {
+  margin: 0 0 5px 0;
+  font-size: 22px;
+  color: #333333;
+}
+
+.details-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 14px;
+  color: #555555;
+}
+
+/* 📅 Middle-Right Section: Date & Time Selectors */
+.card-scheduler-section {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 20px;
+  border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 12px;
+  fontWeight: bold;
+  color: #666666;
+  margin-bottom: 3px;
+}
+
+.scheduler-input {
+  padding: 6px 10px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.scheduler-input:focus {
+  border-color: #007bff;
+}
+
+/* 🟢 Right Section: Book Now Button */
+.card-action-section {
+  flex: 1;
+  padding-left: 20px;
+  text-align: center;
+}
+
+.book-now-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
+  transition: background-color 0.2s;
+}
+
+.book-now-btn:hover {
+  background-color: #218838;
+}
