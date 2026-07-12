@@ -1,24 +1,63 @@
 ﻿import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaBriefcase, FaDollarSign, FaTools, FaMapMarkerAlt } from 'react-icons/fa';
+import axios from 'axios'; 
+import { FaHome, FaBriefcase, FaDollarSign, FaTools, FaMapMarkerAlt, FaSignOutAlt, FaUser, FaCalendarCheck } from 'react-icons/fa';
 import './UserDashboard.css';
+import BookingModal from './BookingModal';
+
+function parseSearchInput(input) {
+  if (!input.trim()) return { service: '', location: '' };
+  const lowerInput = input.toLowerCase();
+  const serviceKeywords = {
+    'gardener': 'Gardening', 'gardening': 'Gardening',
+    'cleaner': 'Cleaning', 'cleaning': 'Cleaning',
+    'plumber': 'Plumbing', 'plumbing': 'Plumbing',
+    'electrician': 'Electrical', 'electrical': 'Electrical',
+    'carpenter': 'Carpentry', 'carpentry': 'Carpentry',
+    'painter': 'Painting', 'painting': 'Painting',
+    'mechanic': 'Mechanic', 'auto repair': 'Auto Repair'
+  };
+  const locationKeywords = ['near', 'at', 'in', 'around', 'near by'];
+  let extractedService = '';
+  let extractedLocation = '';
+
+  for (const [keyword, category] of Object.entries(serviceKeywords)) {
+    if (lowerInput.includes(keyword)) { extractedService = category; break; }
+  }
+  for (const locKeyword of locationKeywords) {
+    const pattern = new RegExp(`\\b${locKeyword}\\s+(.+?)(?:\\s*$|\\s+(?:${locationKeywords.join('|')}))`);
+    const match = lowerInput.match(pattern);
+    if (match && match[1]) {
+      extractedLocation = match[1].replace(/[^a-z0-9\s]/gi, '').trim().split(/\s+/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      break;
+    }
+  }
+  if (!extractedService && !extractedLocation && input.trim()) {
+    const parts = input.split(/\s+/);
+    if (parts.length >= 2) {
+      extractedService = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+      extractedLocation = parts.slice(1).join(' ');
+    } else { extractedService = input; }
+  }
+  return { service: extractedService, location: extractedLocation };
+}
 
 function UserDashboard() {
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [service, setService] = useState('');
+  const [location, setLocation] = useState('');
   const [searching, setSearching] = useState(false);
   
-  // 📅 එක් එක් Provider සඳහා තෝරාගන්නා Date සහ Time වෙන වෙනම තබා ගැනීමට State එකක්
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState(null);
   const [bookingInputs, setBookingInputs] = useState({});
 
-  const customerName = localStorage.getItem('customerName') || 'Guest User';
-
-  const fetchProviders = async (service = '') => {
+  const fetchProviders = async (serviceQuery = '', locationQuery = '') => {
     setLoading(true);
     try {
       const res = await axios.get('http://localhost:5000/api/provider/search', {
-        params: { service }
+        params: { service: serviceQuery, location: locationQuery }
       });
       setProviders(res.data || []);
     } catch (err) {
@@ -30,147 +69,169 @@ function UserDashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchProviders();
-  }, []);
+  useEffect(() => { fetchProviders(); }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
     setSearching(true);
-    fetchProviders(searchTerm);
+    const { service: parsedService, location: parsedLocation } = parseSearchInput(searchTerm);
+    setService(parsedService);
+    setLocation(parsedLocation);
+    fetchProviders(parsedService, parsedLocation);
   };
 
-  // 🔄 Input fields වෙනස් වන විට අදාළ Provider ගේ ID එකට අගයන් තැන්පත් කිරීම
   const handleInputChange = (providerId, field, value) => {
     setBookingInputs(prev => ({
       ...prev,
-      [providerId]: {
-        ...prev[providerId],
-        [field]: value
-      }
+      [providerId]: { ...prev[providerId], [field]: value }
     }));
   };
 
-  const handleBookProvider = async (providerId, providerCategory) => {
-    // 🚨 පරිශීලකයා තෝරාගත් Date සහ Time ලබා ගැනීම
-    const selectedDate = bookingInputs[providerId]?.date;
-    const selectedTime = bookingInputs[providerId]?.time;
-
-    // Validation: Date සහ Time තෝරා නොමැති නම් Alert එකක් පෙන්වීම
-    if (!selectedDate || !selectedTime) {
-      alert('Please select both Date and Time before booking!');
-      return;
-    }
-
-    try {
-      await axios.post('http://localhost:5000/api/provider/bookings/create', {
-        provider_id: providerId,
-        client_name: customerName,
-        service_category: providerCategory,
-        booking_date: selectedDate, // Dynamic Date
-        booking_time: selectedTime  // Dynamic Time
-      });
-      alert('Booking request sent successfully!');
-      
-      // බුකින් එක සාර්ථක වූ පසු Inputs හිස් කිරීම
-      setBookingInputs(prev => ({
-        ...prev,
-        [providerId]: { date: '', time: '' }
-      }));
-    } catch (err) {
-      console.error('Booking failed:', err);
-      alert('Failed to send booking request.');
-    }
+  // 🚪 Logout Functionality
+  const handleLogout = () => {
+   
+    window.location.href = '/login'; 
   };
 
   return (
-    <div className="user-dashboard" style={{ padding: '20px' }}>
-      <h2>Find Available Service Providers</h2>
-
-      <form onSubmit={handleSearch} style={{ marginTop: '16px', marginBottom: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search by service, provider name, or category"
-          style={{ flex: '1', minWidth: '260px', padding: '10px', borderRadius: '6px', border: '1px solid #ccc' }}
-        />
-        <button
-          type="submit"
-          style={{ padding: '10px 16px', borderRadius: '6px', border: 'none', backgroundColor: '#007bff', color: '#fff', cursor: 'pointer' }}
-        >
-          {searching ? 'Searching...' : 'Search'}
-        </button>
-      </form>
-
-      {loading ? (
-        <p>Loading providers...</p>
-      ) : providers.length === 0 ? (
-        <p>No providers found for this search.</p>
-      ) : (
-        /* 🚨 Grid වෙනුවට Flex Direction Row වන පරිදි Landscape Cards Container එක සකස් කිරීම */
-        <div className="providers-landscape-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {providers.map((provider) => (
-            <div key={provider.id} className="provider-landscape-card">
-              
-              {/* 1. වම් කෙළවර: Profile Image */}
-              <div className="card-avatar-section">
-                <img
-                  src={provider.profile_image || 'https://via.placeholder.com/150'}
-                  alt={provider.name}
-                  className="provider-avatar"
-                />
-              </div>
-
-              {/* 2. මැද කොටස: Provider Details */}
-              <div className="card-details-section">
-                <h3 className="provider-name">{provider.name}</h3>
-                <div className="details-row">
-                  <p><FaBriefcase /> <b>Experience:</b> {provider.experience_years} Years</p>
-                  <p><FaDollarSign /> <b>Rate:</b> LKR {provider.hourly_rate}/hr</p>
-                </div>
-                <div className="details-row">
-                  <p><FaTools /> <b>Category:</b> {provider.category}</p>
-                  <p><FaMapMarkerAlt /> <b>Location:</b> {provider.location}</p>
-                </div>
-              </div>
-
-              {/* 3. මැද දකුණු කොටස: Date & Time Scheduler */}
-              <div className="card-scheduler-section">
-                <div className="input-group">
-                  <label>Select Date:</label>
-                  <input
-                    type="date"
-                    className="scheduler-input"
-                    value={bookingInputs[provider.id]?.date || ''}
-                    onChange={(e) => handleInputChange(provider.id, 'date', e.target.value)}
-                  />
-                </div>
-                <div className="input-group">
-                  <label>Select Time:</label>
-                  <input
-                    type="time"
-                    className="scheduler-input"
-                    value={bookingInputs[provider.id]?.time || ''}
-                    onChange={(e) => handleInputChange(provider.id, 'time', e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* 4. දකුණු කෙළවර: Action Button */}
-              <div className="card-action-section">
-                <button
-                  onClick={() => handleBookProvider(provider.id, provider.category)}
-                  className="book-now-btn"
-                >
-                  Book Now
-                </button>
-              </div>
-
-            </div>
-          ))}
+    <div className="dashboard-wrapper">
+      
+      {/* 🌐 TOP NAVIGATION BAR WITH HOME LINK */}
+      <nav className="dashboard-navbar">
+        <div className="nav-logo" onClick={() => window.location.href = '/user-dashboard'} style={{cursor: 'pointer'}}>
+          Serve<span>Smart</span>
         </div>
-      )}
+        <div className="nav-links">
+          {/* 🏠 Home Button */}
+          <button className="nav-item" onClick={() => window.location.href = '/'}>
+            <FaHome /> Home
+          </button>
+          
+          <button className="nav-item active" onClick={() => window.location.href = '/user-dashboard'}>
+            <FaTools /> Find Services
+          </button>
+          
+          <button className="nav-item" onClick={() => window.location.href = '/my-bookings'}>
+            <FaCalendarCheck /> My Bookings
+          </button>
+          
+          <button className="nav-item" onClick={() => window.location.href = '/profile'}>
+            <FaUser /> Profile
+          </button>
+          
+          <button className="nav-logout-btn" onClick={handleLogout}>
+            <FaSignOutAlt /> Logout
+          </button>
+        </div>
+      </nav>
+
+      {/* 🏢 MAIN CONTENT AREA (PAGE SIZE INCREASED) */}
+      <div className="dashboard-main-content">
+        <h2 className="main-title">Find Available Service Providers</h2>
+        <p className="main-subtitle">
+          💡 Tip: Type naturally like "I need a plumber near Kelaniya" or "gardener at Colombo"
+        </p>
+
+        {/* SEARCH BAR CONTAINER */}
+        <form onSubmit={handleSearch} className="full-search-form">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search by service, provider name, or category..."
+            className="full-search-input"
+          />
+          <button type="submit" className="full-search-btn">
+            {searching ? 'Searching...' : 'Search'}
+          </button>
+        </form>
+
+        {/* NLP EXTRACTION INDICATOR */}
+        {(service || location) && (
+          <div className="extracted-badge-row">
+            <strong>🔍 Extracted:</strong>
+            {service && <span className="badge service-tag">Service: {service}</span>}
+            {location && <span className="badge location-tag">Location: {location}</span>}
+          </div>
+        )}
+
+        {/* CARDS DISPLAY CONTAINER */}
+        {loading ? (
+          <p className="status-message">Loading providers...</p>
+        ) : providers.length === 0 ? (
+          <p className="status-message">No providers found for this search.</p>
+        ) : (
+          <div className="full-page-providers-grid">
+            {providers.map((provider, index) => (
+              <div className="provider-vertical-card" key={index}>
+                
+                {/* Profile Avatar & Name */}
+                <div className="card-avatar-wrapper">
+                  <img
+                    src={provider.profile_image || 'https://picsum.photos/150'}
+                    alt={provider.name}
+                    className="provider-round-avatar"
+                  />
+                  <h3 className="provider-display-name">{provider.name}</h3>
+                </div>
+
+                {/* Info List */}
+                <div className="card-info-list">
+                  <div className="info-row"><FaBriefcase className="icon-b" /> <span><b>Experience:</b> {provider.experience_years || '2'} Years</span></div>
+                  <div className="info-row"><FaDollarSign className="icon-g" /> <span><b>Rate:</b> LKR {provider.hourly_rate || '1000'}/hr</span></div>
+                  <div className="info-row"><FaTools className="icon-o" /> <span><b>Category:</b> {provider.category}</span></div>
+                  <div className="info-row"><FaMapMarkerAlt className="icon-r" /> <span><b>Location:</b> {provider.location || 'Kelaniya'}</span></div>
+                </div>
+
+                {/* Mini Scheduler Inputs */}
+                <div className="card-scheduler-box">
+                  <div className="mini-input-field">
+                    <label>Select Date:</label>
+                    <input
+                      type="date"
+                      className="input-element"
+                      value={bookingInputs[provider.id]?.date || ''}
+                      onChange={(e) => handleInputChange(provider.id, 'date', e.target.value)}
+                    />
+                  </div>
+                  <div className="mini-input-field">
+                    <label>Select Time:</label>
+                    <input
+                      type="time"
+                      className="input-element"
+                      value={bookingInputs[provider.id]?.time || ''}
+                      onChange={(e) => handleInputChange(provider.id, 'time', e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                {/* Booking Button */}
+                <div className="card-action-wrapper">
+                  <button 
+                    className="full-card-book-btn" 
+                    onClick={() => {
+                      setSelectedProvider(provider);
+                      setShowModal(true);
+                    }}
+                  >
+                    Book Now
+                  </button>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <BookingModal 
+        show={showModal} 
+        onClose={() => setShowModal(false)} 
+        provider={selectedProvider} 
+        bookingDate={selectedProvider ? bookingInputs[selectedProvider.id]?.date : ''} 
+        bookingTime={selectedProvider ? bookingInputs[selectedProvider.id]?.time : ''} 
+      />
+
     </div>
   );
 }

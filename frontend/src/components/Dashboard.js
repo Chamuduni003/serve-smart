@@ -8,8 +8,7 @@ function Dashboard() {
   const navigate = useNavigate();
   // සේවා සපයන්නන්ගේ දත්ත ගබඩා කිරීමට state එක
   const [providers, setProviders] = useState([
-    // මෙය පරීක්ෂා කිරීම සඳහා උදාහරණ දත්ත කිහිපයක්. 
-    // පසුව ඔබ backend එකෙන් දත්ත ගත් පසු මෙය හිස් array එකක් [ ] ලෙස තබන්න.
+    
     { id: 1, name: "John Plumbing", category: "Plumbing", location: "Colombo", rating: 4.8 },
     { id: 2, name: "Tech Electrical", category: "Electrical", location: "Colombo", rating: 4.5 }
   ]);

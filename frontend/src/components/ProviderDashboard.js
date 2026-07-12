@@ -1,221 +1,118 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaBriefcase, FaDollarSign, FaTools, FaMapMarkerAlt, FaCheckCircle, FaTimesCircle, FaCalendarAlt, FaStar, FaCamera } from 'react-icons/fa';
-import './ProviderDashboard.css';
 
-function ProviderDashboard() {
-  const [isAvailable, setIsAvailable] = useState(true);
-  const [providerData, setProviderData] = useState(null); 
-  const [bookings, setBookings] = useState([]); 
-  const [reviews, setReviews] = useState([]); // Reviews තියාගන්න අලුත් State එකක්
-  const [loading, setLoading] = useState(true); 
-
-  const userId = localStorage.getItem('userId') || 1; 
+export default function ProviderDashboard() {
+  const [provider, setProvider] = useState({ name: 'Service Provider' });
+  const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    // 1. Provider ගේ Profile දත්ත ලබාගැනීම
-    axios.get(`http://localhost:5000/api/provider/profile/${userId}`)
-      .then(res => {
-        setProviderData(res.data);
-        setIsAvailable(res.data.is_available === 1 || res.data.is_available === true);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching provider data:", err);
-        setLoading(false);
-      });
-
-    // 2. Booking Requests ලබාගැනීම
-    axios.get(`http://localhost:5000/api/provider/bookings/${userId}`)
-      .then(res => {
-        setBookings(res.data);
-      })
-      .catch(err => {
-        console.error("Error fetching bookings:", err);
-      });
-
-    // 3. Provider ගේ Reviews ලබාගැනීම (අලුතින් එකතු කලා)
-    axios.get(`http://localhost:5000/api/provider/reviews/${userId}`)
-      .then(res => {
-        setReviews(res.data);
-      })
-      .catch(err => {
-        console.error("Error fetching reviews:", err);
-      });
-  }, [userId]);
-
-  // Availability Status එක Update කිරීම
-  const handleAvailabilityToggle = async () => {
-    try {
-      const nextStatus = !isAvailable;
-      await axios.put(`http://localhost:5000/api/provider/availability`, {
-        userId: userId,
-        isAvailable: nextStatus
-      });
-      setIsAvailable(nextStatus);
-    } catch (err) {
-      console.error("Error updating availability:", err);
+    // 1. ලොග් වෙලා ඉන්න කෙනාගේ විස්තර LocalStorage එකෙන් ගන්න
+    const providerData = localStorage.getItem('loggedInProvider');
+    if (providerData) {
+      setProvider(JSON.parse(providerData));
     }
-  };
 
-  // Profile Photo Upload කිරීම (අලුතින් එකතු කලා)
-  const handlePhotoUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('profileImage', file);
-    formData.append('userId', userId);
-
-    try {
-      // Backend එකට Photo එක Upload කරන API එක
-      const res = await axios.post(`http://localhost:5000/api/provider/upload-avatar`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+    // 2. LocalStorage එකේ තියෙන active_booking එක ගන්න
+    const bookingData = localStorage.getItem('active_booking');
+    if (bookingData) {
+      const booking = JSON.parse(bookingData);
       
-      // DB එකෙන් ලැබෙන අලුත් Image URL එක UI එකට Update කිරීම
-      setProviderData({ ...providerData, profile_image: res.data.imageUrl });
-      alert("Profile picture updated successfully!");
-    } catch (err) {
-      console.error("Photo upload failed:", err);
-      alert("Failed to upload photo.");
+      const loggedProvider = JSON.parse(providerData);
+      if (loggedProvider && booking.providerName === loggedProvider.name) {
+        setRequests([booking]); 
+      }
     }
-  };
+  }, []);
 
-  // Booking එකක් Accept කිරීම
-  const handleAcceptBooking = async (bookingId) => {
-    try {
-      await axios.put(`http://localhost:5000/api/bookings/status/${bookingId}`, { status: 'Accepted' });
-      setBookings(bookings.filter(b => b.id !== bookingId));
-      alert("Booking Accepted!");
-    } catch (err) {
-      console.error("Error accepting booking:", err);
-    }
-  };
+  const handleLogout = () => {
+    // 1. අදාළ දත්ත පමණක් මකන්න
+    localStorage.removeItem('loggedInProvider');
+    localStorage.removeItem('active_booking');
 
-  // Booking එකක් Reject කිරීම
-  const handleRejectBooking = async (bookingId) => {
-    try {
-      await axios.put(`http://localhost:5000/api/bookings/status/${bookingId}`, { status: 'Rejected' });
-      setBookings(bookings.filter(b => b.id !== bookingId));
-      alert("Booking Rejected!");
-    } catch (err) {
-      console.error("Error rejecting booking:", err);
-    }
+    // 2. Refresh කරලා Login පේජ් එකට යවන්න
+    window.location.href = '/login'; 
   };
-
-  if (loading) {
-    return <div className="loading-text">Loading Dashboard Data...</div>;
-  }
 
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-content">
-        <div className="profile-card">
-          
-          {/* Left Side: Profile Details */}
-          <div className="profile-details-side">
-            <div className="avatar-section">
-              <div className="avatar-container" style={{ position: 'relative', display: 'inline-block' }}>
-                {/* 👤 Icon එක වෙනුවට DB එකේ Image එක පෙන්වීම */}
-                <img 
-                  src={providerData?.profile_image || 'https://via.placeholder.com/150'} 
-                  alt="Profile" 
-                  className="profile-img"
-                  style={{ width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #fff', boxShadow: '0px 4px 10px rgba(0,0,0,0.1)' }}
-                />
-                {/* Photo එක තෝරන්න කුඩා කැමරා බොත්තම */}
-                <label htmlFor="file-input" style={{ position: 'absolute', bottom: '5px', right: '5px', backgroundColor: '#007bff', color: '#fff', padding: '8px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <FaCamera size={14} />
-                </label>
-                <input id="file-input" type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
-              </div>
+    <div className="d-flex" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+      {/* Sidebar */}
+      <nav className="bg-dark text-white p-4" style={{ width: '250px' }}>
+        <h4 className="mb-5 fw-bold text-primary">Smart Service</h4>
+        <ul className="nav flex-column gap-3">
+          <li className="nav-item"><a className="nav-link text-white active" href="#"><i className="bi bi-grid-fill me-2"></i>Dashboard</a></li>
+          <li className="nav-item"><a className="nav-link text-secondary" href="#"><i className="bi bi-calendar-check me-2"></i>Bookings</a></li>
+          <li className="nav-item"><a className="nav-link text-secondary" href="#"><i className="bi bi-person-circle me-2"></i>Profile</a></li>
+        </ul>
+      </nav>
 
-              <h2>Welcome Back, {providerData?.name || 'Provider'}!</h2>
-              
+      {/* Main Content */}
+      <main className="flex-grow-1">
+        
+        {/* අලුත් Navbar එක */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-white px-5 py-3 shadow-sm">
+          <div className="container-fluid">
+            <span className="navbar-brand fw-bold text-primary">Dashboard</span>
+            <div className="d-flex align-items-center gap-3">
+              <span className="text-muted small">Welcome, <strong className="text-dark">{provider.name}</strong></span>
               <button 
-                onClick={handleAvailabilityToggle}
-                className={`status-badge ${isAvailable ? 'available' : 'unavailable'}`}
-              >
-                {isAvailable ? "🟢 Available" : "🔴 Not Available"}
-              </button>
+  className="btn btn-outline-danger btn-sm" 
+  onClick={handleLogout}
+>
+  Logout
+</button>
             </div>
+          </div>
+        </nav>
 
-            <div className="info-list">
-              <div className="info-item">
-                <FaBriefcase className="icon" /> 
-                <span><b>Experience:</b> {providerData?.experience_years || '0'} Years of Experience</span>
-              </div>
-              <div className="info-item">
-                <FaDollarSign className="icon" /> 
-                <span><b>Hourly Rate:</b> LKR {providerData?.hourly_rate || '0.00'} per hour</span>
-              </div>
-              <div className="info-item">
-                <FaTools className="icon" /> 
-                <span><b>Service Category:</b> <span className="badge">{providerData?.category || 'General'}</span></span>
-              </div>
-              <div className="info-item">
-                <FaMapMarkerAlt className="icon" /> 
-                <span><b>Service Location:</b> {providerData?.location || 'Not Specified'}</span>
+        {/* Dashboard Content */}
+        <div className="p-5">
+          <header className="mb-4">
+            <h2 className="fw-bold">Welcome back, {provider.name}! 👋</h2>
+            <p className="text-muted">Manage your service requests efficiently.</p>
+          </header>
+
+          {/* Stats Card */}
+          <div className="row mb-4">
+            <div className="col-md-3">
+              <div className="card p-3 border-0 shadow-sm rounded-4">
+                <p className="text-muted small">New Requests</p>
+                <h3 className="fw-bold">{requests.length}</h3>
               </div>
             </div>
-
-            <button className="edit-profile-btn">Edit Profile</button>
           </div>
 
-          {/* Right Side: Booking Requests & Reviews */}
-          <div className="booking-requests-side">
-            
-            {/* Incoming Bookings Section */}
-            <h3><FaCalendarAlt /> Incoming Bookings</h3>
-            <div className="bookings-container" style={{ marginBottom: '30px' }}>
-              {bookings.length === 0 ? (
-                <p className="no-bookings">No booking requests yet.</p>
-              ) : (
-                bookings.map(booking => (
-                  <div key={booking.id} className="booking-item-card">
-                    <h4>{booking.client_name || booking.client_email || 'Requested Client'}</h4>
-                    <p><strong>Service:</strong> {booking.service_category || providerData?.category || 'Service Request'}</p>
-                    <p><strong>Date:</strong> {booking.booking_date || 'N/A'} | <strong>Time:</strong> {booking.booking_time || 'N/A'}</p>
-                    <p><strong>Status:</strong> <span className={`booking-status ${booking.status?.toLowerCase()}`}>{booking.status || 'pending'}</span></p>
-                    <div className="action-buttons">
-                      <button className="btn-accept" onClick={() => handleAcceptBooking(booking.id)}><FaCheckCircle /> Accept</button>
-                      <button className="btn-reject" onClick={() => handleRejectBooking(booking.id)}><FaTimesCircle /> Reject</button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-
-            {/* Customer Reviews Section (අලුතින් එකතු කලා) */}
-            <h3><FaStar style={{ color: '#ffc107' }} /> Customer Reviews</h3>
-            <div className="reviews-container" style={{ maxHeight: '300px', overflowY: 'auto' }}>
-              {reviews.length === 0 ? (
-                <p className="no-bookings">No reviews yet.</p>
-              ) : (
-                reviews.map(review => (
-                  <div key={review.id} className="booking-item-card" style={{ borderLeft: '4px solid #ffc107' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <h4>{review.reviewer_name || 'Anonymous'}</h4>
-                      <div>
-                        {/* Rating එක අනුව තරු (Stars) ගණන Render කිරීම */}
-                        {[...Array(review.rating)].map((_, i) => (
-                          <FaStar key={i} style={{ color: '#ffc107', marginRight: '2px' }} />
-                        ))}
+          {/* Dynamic Booking Requests */}
+          <h5 className="fw-bold mb-3">Incoming Requests</h5>
+          <div className="row">
+            {requests.length === 0 ? (
+              <p className="text-muted px-3">No new requests found.</p>
+            ) : (
+              requests.map((req, index) => (
+                <div key={index} className="col-md-4">
+                  <div className="card border-0 shadow-sm p-3 rounded-4">
+                    <div className="d-flex align-items-center mb-3">
+                      <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: 40, height: 40 }}>
+                        {req.clientName ? req.clientName.charAt(0).toUpperCase() : 'U'}
+                      </div>
+                      <div className="ms-3">
+                        <h6 className="mb-0 fw-bold">{req.clientName || 'Valued Client'}</h6>
+                        <small className="text-muted">{req.category || 'Service'}</small>
                       </div>
                     </div>
-                    <p style={{ fontStyle: 'italic', marginTop: '5px', color: '#555' }}>"{review.comment}"</p>
+                    <div className="small mb-3">
+                      <p className="mb-1"><i className="bi bi-calendar-event me-2 text-primary"></i> {req.bookingDate}</p>
+                      <p className="mb-1"><i className="bi bi-clock me-2 text-primary"></i> {req.bookingTime}</p>
+                    </div>
+                    <div className="d-flex gap-2">
+                      <button className="btn btn-outline-success btn-sm flex-grow-1">Accept</button>
+                      <button className="btn btn-outline-danger btn-sm flex-grow-1">Reject</button>
+                    </div>
                   </div>
-                ))
-              )}
-            </div>
-
+                </div>
+              ))
+            )}
           </div>
-
         </div>
-      </div>
+      </main>
     </div>
   );
 }
-
-export default ProviderDashboard;

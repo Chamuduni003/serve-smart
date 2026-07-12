@@ -18,6 +18,9 @@ function Navbar() {
           <li className="nav-item">
             <Link className="nav-link btn btn-primary text-white ms-lg-3 px-4" to="/login">Login</Link>
           </li>
+          <Link to="/provider-dashboard" className="btn btn-primary">
+  Go to Dashboard
+</Link>
         </ul>
       </div>
     </nav>

@@ -1,7 +1,7 @@
 
 import React from 'react';
-import Register from '../pages/Register'; // මෙය පමණක් තබා ගන්න
-import '../pages/LandingPage.css'; // css ෆයිල් එකේ නිවැරදි Path එක
+import Register from '../pages/Register'; 
+import '../pages/LandingPage.css'; 
 import { useNavigate } from 'react-router-dom';
 
 
@@ -13,7 +13,7 @@ const LandingPage = () => {
       <div className="container py-5">
         <div className="row align-items-center min-vh-100">
           
-          {/* වම් පැත්ත: පෝරමය */}
+          
           <div className="col-md-5">
             <h2 className="mb-4 fw-bold text-primary">Join Our Platform</h2>
             <div id="register-section">
@@ -21,7 +21,7 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* දකුණු පැත්ත: විස්තරය සහ රූපය */}
+         
           <div className="col-md-7 text-center text-md-start ps-md-5">
             <h1 className="display-3 fw-bold mb-4">Find the Best Service Providers in Minutes</h1>
             <p className="lead mb-4 text-secondary">
@@ -43,7 +43,7 @@ const LandingPage = () => {
                </button>
             </div>
             
-            {/* උසස් තත්ත්වයේ රූපයක් (Unsplash හෝ වෙනත් පින්තූරයක්) */}
+            
             <img 
               src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800" 
               alt="Professional Service" 

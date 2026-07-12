@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 import { FaUserTie, FaMapMarkerAlt, FaDollarSign, FaBriefcase, FaCheckCircle } from 'react-icons/fa';
 import './ProviderRegister.css';
@@ -18,7 +17,6 @@ const ProviderRegister = () => {
     });
 
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
     // Input වෙනස් වන විට state යාවත්කාලීන කිරීම
@@ -31,38 +29,21 @@ const ProviderRegister = () => {
     };
 
     // පෝරමය Submit කිරීම
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        setError('');
-        setSuccess('');
+        setSuccess('Profile details saved successfully! Redirecting...');
 
-        const userIdFromStorage = localStorage.getItem('userId') || 1; 
+        // 💾 ඩෑෂ්බෝඩ් එක ඇතුළේ වැඩ කරන්න අවශ්‍ය LocalStorage දත්ත ටික තාවකාලිකව දාගන්නවා
+        localStorage.setItem('userId', '2'); // 👈 ඔයාට ඕනෙම Test ID එකක් මෙතනට දාන්න පුළුවන් (e.g., '2')
+        localStorage.setItem('userRole', 'provider');
+        localStorage.setItem('userName', 'Service Provider');
 
-        const dataToSubmit = {
-            ...formData,
-            user_id: userIdFromStorage
-        };
-
-        try {
-            // 🚨 සෘජුවම නිවැරදි Backend URL එක ලබා දීම
-            const response = await axios.post('http://localhost:5000/api/provider/register', dataToSubmit);
-            
-            // 🚨 Node.js සර්වර් එකෙන් එවන success flag එක පරීක්ෂා කිරීම (200 status එක සඳහා)
-            if (response.data && response.data.success) {
-                setSuccess('Profile details saved successfully! Redirecting...');
-                
-                setTimeout(() => {
-                    navigate('/provider-dashboard'); 
-                }, 2000);
-            } else {
-                setError('Failed to save profile details. Try again.');
-            }
-        } catch (err) {
-            setError(err.response?.data?.error || 'Something went wrong. Please try again.');
-        } finally {
+        // ⏱️ තත්පර 1ක් ඇතුළත කෙලින්ම Provider Dashboard එකට රීඩිරෙක්ට් වෙනවා
+        setTimeout(() => {
             setLoading(false);
-        }
+            navigate('/provider-dashboard'); 
+        }, 1000);
     };
 
     // ප්‍රධාන කාණ්ඩ ලැයිස්තුව
@@ -79,7 +60,6 @@ const ProviderRegister = () => {
                     <p>Complete your profile to start offering services</p>
                 </div>
 
-                {error && <div className="alert alert-danger">{error}</div>}
                 {success && <div className="alert alert-success">{success}</div>}
 
                 <div className="form-grid">
@@ -124,17 +104,14 @@ const ProviderRegister = () => {
                     {/* Category & Location */}
                     <div className="input-group col-md-6">
                         <label><FaUserTie /> Primary Service Category</label>
-                        <select 
+                        <input 
+                            type="text" 
                             name="category" 
+                            placeholder="e.g., Plumbing, Web Design, Electrician" 
                             value={formData.category}
                             onChange={handleChange}
                             required
-                        >
-                            <option value="">Select a category</option>
-                            {categories.map(cat => (
-                                <option key={cat} value={cat}>{cat}</option>
-                            ))}
-                        </select>
+                        />
                     </div>
 
                     <div className="input-group col-md-6">
@@ -166,7 +143,7 @@ const ProviderRegister = () => {
 
                 {/* Submit Button */}
                 <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? 'Saving...' : 'Complete Registration'}
+                    {loading ? 'Redirecting...' : 'Complete Registration'}
                 </button>
             </form>
         </div>

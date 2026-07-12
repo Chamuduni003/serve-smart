@@ -1,129 +1,315 @@
-/* 🔎 Search Row Section */
-.search-container {
+/* 🌐 Main System Canvas */
+.dashboard-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f8fafc; /* Clean UI Grey Background */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 🧭 SYSTEM NAVBAR (Sleek & Compact) */
+.dashboard-navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 12px 4%; /* Compact standard height */
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-logo {
+  font-size: 1.35rem;
+  font-weight: 750;
+  color: #007bff;
+  cursor: pointer;
+  letter-spacing: -0.5px;
+}
+
+.nav-logo span {
+  color: #0f172a;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 550;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.nav-item:hover {
+  color: #007bff;
+  background-color: #f1f5f9;
+}
+
+.nav-item.active {
+  color: #007bff;
+  background-color: #e6f2ff; /* Flat active style */
+}
+
+.nav-logout-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s;
+  margin-left: 8px;
+}
+
+.nav-logout-btn:hover {
+  background-color: #dc3545;
+}
+
+/* 🏢 MAIN CONTENT CONTAINER (Perfect Width Alignment) */
+.dashboard-main-content {
+  width: 100%;
+  max-width: 1400px; /* Limits maximum expansion on ultra-wide screens */
+  margin: 0 auto;
+  padding: 35px 4%; 
+  box-sizing: border-box;
+}
+
+.main-title {
+  color: #0f172a;
+  font-size: 1.85rem; /* Balanced Professional Size */
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.5px;
+}
+
+.main-subtitle {
+  color: #64748b;
+  font-size: 0.92rem;
+  margin: 0 0 30px 0;
+}
+
+/* 🔍 SEARCH COMPONENT (Sleek Border Design) */
+.full-search-form {
+  display: flex;
   gap: 10px;
   margin-bottom: 30px;
-}
-
-/* 📇 Landscape Provider Card Container */
-.provider-landscape-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 20px;
-  margin: 15px auto;
   width: 100%;
-  max-width: 850px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f0f0f0;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.provider-landscape-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+.full-search-input {
+  flex: 1;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* 👤 Left Section: Profile Image */
-.card-avatar-section {
-  flex: 0 0 100px;
-  margin-right: 20px;
+.full-search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.full-search-btn {
+  padding: 12px 28px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.15s;
+}
+
+.full-search-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 📊 NLP Badges */
+.extracted-badge-row {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  font-size: 0.9rem;
+  color: #166534;
+}
+
+.badge {
+  margin-left: 8px;
+  padding: 3px 12px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+.service-tag { background-color: #007bff; }
+.location-tag { background-color: #22c55e; }
+
+/* 🗺️ PROFESSIONAL GRID (4-Column Layout on Big Screens) */
+.full-page-providers-grid {
+  display: grid;
+  /* Automatically columns based on viewport standard */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px; 
+  width: 100%;
+}
+
+/* 🗂️ CARD SYSTEM (Minimalist & Clean) */
+.provider-vertical-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px; /* Standard Soft Edges */
+  padding: 22px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.provider-vertical-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  border-color: #cbd5e1;
+}
+
+/* Avatar Header */
+.card-avatar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-.provider-avatar {
-  width: 80px;
+.provider-round-avatar {
+  width: 80px; /* Standard Professional Size */
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #f1f5f9;
+  margin-bottom: 10px;
 }
 
-/* 📝 Middle Section: Provider Details */
-.card-details-section {
-  flex: 2;
+.provider-display-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+/* Info List Items */
+.card-info-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  text-align: left;
+  background-color: #f8fafc;
+  padding: 12px 14px;
+  border-radius: 8px;
 }
 
-.provider-name {
-  margin: 0 0 5px 0;
-  font-size: 22px;
-  color: #333333;
-}
-
-.details-row {
+.info-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  font-size: 14px;
-  color: #555555;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: #475569;
 }
 
-/* 📅 Middle-Right Section: Date & Time Selectors */
-.card-scheduler-section {
-  flex: 1.5;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0 20px;
-  border-left: 1px solid #eeeeee;
-  border-right: 1px solid #eeeeee;
+.info-row b {
+  color: #334155;
+  font-weight: 600;
 }
 
-.input-group {
+.icon-b { color: #3b82f6; }
+.icon-g { color: #10b981; }
+.icon-o { color: #f97316; }
+.icon-r { color: #ef4444; }
+
+/* Scheduler Inputs Area */
+.card-scheduler-box {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  gap: 10px;
 }
 
-.input-group label {
-  font-size: 12px;
-  fontWeight: bold;
-  color: #666666;
-  margin-bottom: 3px;
+.mini-input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.scheduler-input {
-  padding: 6px 10px;
-  border: 1px solid #cccccc;
+.mini-input-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.input-element {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
-  font-size: 13px;
+  background-color: #ffffff;
   outline: none;
-  transition: border-color 0.2s;
+  color: #334155;
 }
 
-.scheduler-input:focus {
+.input-element:focus {
   border-color: #007bff;
 }
 
-/* 🟢 Right Section: Book Now Button */
-.card-action-section {
-  flex: 1;
-  padding-left: 20px;
-  text-align: center;
-}
-
-.book-now-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
+/* Compact Book Button */
+.full-card-book-btn {
   width: 100%;
-  box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
-  transition: background-color 0.2s;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s;
 }
 
-.book-now-btn:hover {
-  background-color: #218838;
+.full-card-book-btn:hover {
+  background-color: #0056b3;
+}
+
+.status-message {
+  text-align: center;
+  color: #64748b;
+  font-size: 1rem;
+  margin-top: 50px;
 }

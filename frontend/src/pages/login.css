@@ -58,3 +58,21 @@
 .login-btn:hover {
   background-color: #0056b3;
 }
+
+/* login.css ෆයිල් එකේ මෙහෙම තියෙනවා නේද? */
+.login-container {
+    background-image: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-card {
+    width: 450px;       /* width එක ටිකක් වැඩි කළා */
+    padding: 3rem;      /* පෑඩින් එක වැඩි කළා */
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}

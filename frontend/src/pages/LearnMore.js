@@ -32,7 +32,7 @@ function LearnMore() {
           <div className="p-4">
             <h2 className="text-primary">✅ 03</h2>
             <h4>Done</h4>
-            <p>Get your job done by verified experts with 100% satisfaction.</p>
+            <p>Get your services done by verified experts with 100% satisfaction.</p>
           </div>
         </div>
       </div>

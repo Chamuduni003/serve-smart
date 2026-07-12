@@ -1,8 +1,8 @@
-/* පොදු සැකසුම් */
+
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5; /* සැහැල්ලු අළු පැහැති පසුබිම */
+    background-color: #f0f2f5; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,15 +12,15 @@ body {
 
 .main-container {
     width: 100%;
-    max-width: 700px; /* පෝරමයේ උපරිම පළල */
+    max-width: 700px; 
 }
 
-/* පෝරමයේ මෝස්තරය */
+
 .profile-form {
-    background: #ffffff; /* පෝරමයේ සුදු පසුබිම */
+    background: #ffffff; 
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* මෘදු සෙවනැල්ලක් */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
 }
 
 .form-header {
@@ -31,7 +31,7 @@ body {
 
 .form-header h2 {
     margin: 0 0 10px 0;
-    color: #0056b3; /* තද නිල් පැහැති ශීර්ෂය */
+    color: #0056b3; 
     font-size: 28px;
 }
 
@@ -45,11 +45,11 @@ body {
     margin: 0;
 }
 
-/* Form Grid Layout (තීරු දෙකක පිරිසැලසුම) */
+
 .form-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* පේළි සහ තීරු අතර පරතරය */
+    gap: 20px; 
 }
 
 .input-group {
@@ -58,13 +58,13 @@ body {
     gap: 8px;
 }
 
-/* තීරු දෙකකට බෙදීම (6-col grid system) */
+
 .col-md-6 {
-    flex: 0 0 calc(50% - 10px); /* 50% පළල */
+    flex: 0 0 calc(50% - 10px); 
 }
 
 .col-md-12 {
-    flex: 0 0 100%; /* 100% පළල (Bio සහ Availability සඳහා) */
+    flex: 0 0 100%; 
 }
 
 /* ලේබල් සහ අයිකන */
@@ -78,10 +78,10 @@ body {
 }
 
 .input-group label i {
-    color: #888; /* අයිකන වල අළු පැහැය */
+    color: #888; 
 }
 
-/* ආදාන ක්ෂේත්‍ර වල මෝස්තරය (Input, Textarea, Select) */
+
 .input-group input,
 .input-group textarea,
 .input-group select {
@@ -93,7 +93,7 @@ body {
     background-color: #fafafa;
 }
 
-/* ආදාන ක්ෂේත්‍ර මත Focus කරන විට */
+
 .input-group input:focus,
 .input-group textarea:focus,
 .input-group select:focus {
@@ -102,27 +102,27 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
 }
 
-/* Textarea විශේෂ මෝස්තරය */
+
 .input-group textarea {
-    resize: vertical; /* සිරස් අතට පමණක් විශාල කළ හැක */
+    resize: vertical; 
     min-height: 100px;
 }
 
-/* Select (Dropdown) විශේෂ මෝස්තරය */
+
 .input-group select {
-    appearance: none; /* පෙරනිමි dropdown ඊතලය ඉවත් කිරීම */
+    appearance: none; 
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 10px;
 }
 
-/* Checkbox විශේෂ මෝස්තරය */
+
 .checkbox-group {
     flex-direction: row;
     align-items: center;
     margin-top: 15px;
-    background-color: #e8f5e9; /* සැහැල්ලු කොළ පැහැති පසුබිම */
+    background-color: #e8f5e9; 
     padding: 15px;
     border-radius: 8px;
 }
@@ -132,13 +132,13 @@ body {
     height: 20px;
     margin: 0;
     cursor: pointer;
-    accent-color: #28a745; /* Checkbox එකේ කොළ පැහැය */
+    accent-color: #28a745; /* Checkbox  */
 }
 
 .availability-label {
     font-size: 16px !important;
     font-weight: 700 !important;
-    color: #2e7d32 !important; /* තද කොළ පැහැති පෙළ */
+    color: #2e7d32 !important; 
     cursor: pointer;
     margin: 0 0 0 10px !important;
 }
@@ -151,7 +151,7 @@ body {
 .submit-btn {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(90deg, #007bff, #0056b3); /* නිල් පැහැති අනුක්‍රමණය */
+    background: linear-gradient(90deg, #007bff, #0056b3); 
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -163,17 +163,17 @@ body {
     box-shadow: 0 4px 15px rgba(0, 91, 187, 0.2);
 }
 
-/* බොත්තම මත Hover කරන විට */
+
 .submit-btn:hover {
     background: linear-gradient(90deg, #0069d9, #004494);
 }
 
-/* බොත්තම ක්ලික් කරන විට */
+
 .submit-btn:active {
     transform: translateY(1px);
 }
 
-/* Responsive Design (ජංගම දුරකථන සඳහා) */
+
 @media (max-width: 600px) {
     .profile-form {
         padding: 25px;
@@ -184,7 +184,7 @@ body {
     }
 
     .col-md-6 {
-        flex: 0 0 100%; /* කුඩා තිර වල තනි තීරුවකට සැකසීම */
+        flex: 0 0 100%; 
     }
 
     .form-header h2 {

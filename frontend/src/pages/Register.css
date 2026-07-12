@@ -42,7 +42,7 @@
 select.form-control, 
 .input-group input, 
 .input-group select {
-  flex: 1 !important; /* ඉතිරි සම්පූර්ණ ඉඩ ලබා ගැනීමට */
+  flex: 1 !important; 
   width: 100% !important;
   border: 1px solid #ced4da !important;
   border-left: none !important; /* මැද සන්ධියේ border එක ඉවත් කරයි */

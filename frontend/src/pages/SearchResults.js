@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Dashboard.css'; // අපි ලියපු CSS එකම මෙතනටත් පාවිච්චි කරමු
-
+import './Dashboard.css'; 
 const normalizeProvider = (provider) => ({
   id: provider?.id ?? provider?.providerId ?? provider?.user_id,
   fullName: provider?.fullName || provider?.name || provider?.fullname || `Provider #${provider?.user_id || 0}`,

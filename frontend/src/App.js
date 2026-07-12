@@ -11,9 +11,14 @@ import LearnMore from './pages/LearnMore';
 import Navbar from './components/Navbar';
 import ProviderRegister from './components/ProviderRegister';
 import CompleteProfile from './pages/CompleteProfile';
-import ProviderDashboard from './components/ProviderDashboard';
 import ProviderSearch from './components/ProviderSearch';
 import SearchResults from './pages/SearchResults';
+import MyBookings from './components/MyBookings';
+import ProviderDashboard from './components/ProviderDashboard';
+import Profile from './pages/Profile'; // 👈 ඔයා Profile.js එක හැදුවේ components ඇතුළේ නම් මෙහෙම import කරන්න
+
+
+
 
 function PublicLayout() {
   return (
@@ -43,10 +48,12 @@ function App() {
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/booking" element={<BookingPage />} />
-        <Route path="/provider-dashboard" element={<ProviderDashboard />} />
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/search-providers" element={<ProviderSearch />} />
         <Route path="/complete-profile" element={<CompleteProfile />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
+        <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

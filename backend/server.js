@@ -31,8 +31,12 @@ app.post('/login', (req, res) => {
 // USER REGISTER API
 // ==========================================
 app.post('/api/auth/register', (req, res) => {
-  const payload = req.body || {};
-  const { name, email, password, role, location } = payload;
+  console.log("ලැබුණු දත්ත (Request Body):", req.body); // මෙය අනිවාර්යයෙන්ම එක් කරන්න
+  
+  const { name, email, password, role, location } = req.body;
+  
+  
+
 
   if (!name || !email || !password) {
     return res.status(400).json({ success: false, message: 'Please fill in the required fields.' });
@@ -42,11 +46,13 @@ app.post('/api/auth/register', (req, res) => {
   const checkSql = 'SELECT user_id FROM users WHERE email = ? LIMIT 1';
   const insertSql = 'INSERT INTO users (name, email, password, role, location) VALUES (?, ?, ?, ?, ?)';
 
-  db.query(checkSql, [email], (checkErr, existingUsers) => {
-    if (checkErr) {
-      console.error('Registration check error:', checkErr);
-      return res.status(500).json({ success: false, message: 'Registration failed.', error: checkErr.message });
-    }
+  db.query(insertSql, [name, email, password, normalizedRole, location || ''], (insertErr, result) => {
+  if (insertErr) {
+    console.error("SQL Error details:", insertErr); // Terminal එකේ මෙය අනිවාර්යයෙන්ම වැටිය යුතුයි
+    return res.status(500).json({ success: false, error: insertErr.sqlMessage });
+  }
+  return res.status(201).json({ success: true, message: 'User registered successfully!' });
+
 
     if (existingUsers && existingUsers.length > 0) {
       return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
