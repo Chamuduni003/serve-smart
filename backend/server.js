@@ -11,7 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 const db = require('./db'); // db.js path
 
 app.use('/api/provider', providerRoutes);
-app.use('/api/bookings', bookingRoutes);
+//app.use('/apibookings', bookingRoutes);
+app.use('/apibookings', bookingRoutes);
+
 
 // ==========================================
 // LOGIN API
@@ -31,41 +33,38 @@ app.post('/login', (req, res) => {
 // USER REGISTER API
 // ==========================================
 app.post('/api/auth/register', (req, res) => {
-  console.log("ලැබුණු දත්ත (Request Body):", req.body); // මෙය අනිවාර්යයෙන්ම එක් කරන්න
-  
-  const { name, email, password, role, location } = req.body;
-  
-  
+    console.log("ලැබුණු දත්ත (Request Body):", req.body); 
+    
+    const { name, email, password, role, location } = req.body;
 
-
-  if (!name || !email || !password) {
-    return res.status(400).json({ success: false, message: 'Please fill in the required fields.' });
-  }
-
-  const normalizedRole = (role || 'client').toString().toLowerCase();
-  const checkSql = 'SELECT user_id FROM users WHERE email = ? LIMIT 1';
-  const insertSql = 'INSERT INTO users (name, email, password, role, location) VALUES (?, ?, ?, ?, ?)';
-
-  db.query(insertSql, [name, email, password, normalizedRole, location || ''], (insertErr, result) => {
-  if (insertErr) {
-    console.error("SQL Error details:", insertErr); // Terminal එකේ මෙය අනිවාර්යයෙන්ම වැටිය යුතුයි
-    return res.status(500).json({ success: false, error: insertErr.sqlMessage });
-  }
-  return res.status(201).json({ success: true, message: 'User registered successfully!' });
-
-
-    if (existingUsers && existingUsers.length > 0) {
-      return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
+    if (!name || !email || !password) {
+        return res.status(400).json({ success: false, message: 'Please fill in the required fields.' });
     }
 
-    db.query(insertSql, [name, email, password, normalizedRole, location || ''], (insertErr, result) => {
-      if (insertErr) {
-        console.error('Registration insert error:', insertErr);
-        return res.status(500).json({ success: false, message: 'Registration failed.', error: insertErr.message });
-      }
-      return res.status(201).json({ success: true, message: 'User registered successfully!' });
+    const normalizedRole = (role || 'client').toString().toLowerCase();
+
+    // 1. මුලින්ම මෙම Email එක දැනටමත් තිබේදැයි බලන්න
+    const checkSql = 'SELECT * FROM users WHERE email = ?';
+    db.query(checkSql, [email], (checkErr, existingUsers) => {
+        if (checkErr) {
+            console.error("SQL Error (Check):", checkErr);
+            return res.status(500).json({ success: false, message: 'Database error.' });
+        }
+
+        if (existingUsers.length > 0) {
+            return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
+        }
+
+        // 2. Email එක නැත්නම් පමණක් Insert කරන්න
+        const insertSql = 'INSERT INTO users (name, email, password, role, location) VALUES (?, ?, ?, ?, ?)';
+        db.query(insertSql, [name, email, password, normalizedRole, location || ''], (insertErr, result) => {
+            if (insertErr) {
+                console.error("SQL Error (Insert):", insertErr);
+                return res.status(500).json({ success: false, message: 'Registration failed.', error: insertErr.sqlMessage });
+            }
+            return res.status(201).json({ success: true, message: 'User registered successfully!' });
+        });
     });
-  });
 });
 
 // ==========================================
@@ -193,6 +192,7 @@ app.get('/api/categories', (req, res) => {
     res.json(categories);
   });
 });
+
 
 
 app.listen(5000, () => console.log("Server running on port 5000"));

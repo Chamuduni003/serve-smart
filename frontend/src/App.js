@@ -15,7 +15,7 @@ import ProviderSearch from './components/ProviderSearch';
 import SearchResults from './pages/SearchResults';
 import MyBookings from './components/MyBookings';
 import ProviderDashboard from './components/ProviderDashboard';
-import Profile from './pages/Profile'; // 👈 ඔයා Profile.js එක හැදුවේ components ඇතුළේ නම් මෙහෙම import කරන්න
+import Profile from './pages/Profile'; 
 
 
 
