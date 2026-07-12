@@ -32,3 +32,32 @@
 .login-btn:hover {
     background-color: #0b5ed7;
 }
+/* පෙට්ටි වල පෙනුම */
+.form-control {
+    width: 100% !important;
+    padding: 12px !important;
+    border: 1px solid #ced4da !important; /* දේශ සීමාව පැහැදිලි කිරීම */
+    border-radius: 8px !important;
+    display: block !important;
+    background-color: #ffffff !important;
+    color: #495057 !important;
+    margin-top: 5px !important;
+}
+
+/* ලේබල් වල පෙනුම */
+.form-label {
+    display: block;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+/* බොත්තම */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #0d6efd !important;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+}

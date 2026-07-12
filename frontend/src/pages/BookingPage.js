@@ -12,7 +12,7 @@ const BookingPage = () => {
   const [formData, setFormData] = useState({ date: '', notes: '', phone: '', time: '' });
   const [loading, setLoading] = useState(false);
 
-  const clientId = localStorage.getItem('userId') || 1;
+  const clientId = Number(localStorage.getItem('userId'));
 
   useEffect(() => {
     if (!providerId) {
@@ -28,13 +28,20 @@ const BookingPage = () => {
       return;
     }
 
+    if (!Number.isInteger(clientId) || clientId <= 0) {
+      alert('Please sign in before creating a booking.');
+      navigate('/login');
+      return;
+    }
+
     setLoading(true);
     try {
       const payload = {
-        client_id: clientId,
-        provider_id: providerId,
-        booking_date: formData.date,
-        booking_time: formData.time
+        clientId,
+        providerId: Number(providerId),
+        bookingDate: formData.date,
+        bookingTime: formData.time,
+        status: 'Pending'
       };
 
       const res = await axios.post('http://localhost:5000/api/bookings/add', payload);
@@ -46,7 +53,7 @@ const BookingPage = () => {
       }
     } catch (err) {
       console.error('Booking error:', err);
-      alert('Error creating booking.');
+      alert(err.response?.data?.error || 'Error creating booking. Please try again.');
     } finally {
       setLoading(false);
     }

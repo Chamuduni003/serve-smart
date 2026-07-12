@@ -10,47 +10,39 @@ const LandingPage = () => {
   const navigate = useNavigate();
   return (
     <div className="landing-container">
-      <div className="container py-5">
-        <div className="row align-items-center min-vh-100">
-          
-          
-          <div className="col-md-5">
-            <h2 className="mb-4 fw-bold text-primary">Join Our Platform</h2>
-            <div id="register-section">
+      <div className="landing-shell">
+        <section className="landing-form-column" aria-label="Create an account">
+          <div className="landing-eyebrow">SMART SERVICE</div>
+          <h2>Join our platform</h2>
+          <p>Create an account to find trusted local professionals.</p>
+          <div id="register-section">
               <Register />
-            </div>
           </div>
+        </section>
 
-         
-          <div className="col-md-7 text-center text-md-start ps-md-5">
-            <h1 className="display-3 fw-bold mb-4">Find the Best Service Providers in Minutes</h1>
-            <p className="lead mb-4 text-secondary">
-              Our AI-powered recommendation system helps you connect with top-rated 
-              professionals for all your daily needs. Fast, secure, and reliable.
+        <section className="landing-hero-column">
+          <div className="landing-hero-content">
+            <span className="landing-hero-label">ON-DEMAND SERVICES</span>
+            <h1>Find trusted service providers, without the hassle.</h1>
+            <p>
+              Connect with skilled professionals for the jobs that matter. Quick booking,
+              clear updates, and dependable service in one place.
             </p>
-            <div className="d-flex gap-3 justify-content-center justify-content-md-start">
-              
-<div className="provider-link">
-
-  <button onClick={() => navigate('/provider-register')} className="btn-secondary">
-    Register as a Provider
-  </button>
-</div>
-              
-              
-              <button className="btn btn-outline-primary" onClick={() => navigate('/learn-more')}>
-                   Learn More
-               </button>
+            <div className="landing-actions">
+              <button onClick={() => navigate('/provider-register')} className="landing-primary-action">
+                Join as a provider
+              </button>
+              <button className="landing-secondary-action" onClick={() => navigate('/learn-more')}>
+                Learn more
+              </button>
             </div>
-            
-            
             <img 
               src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800" 
               alt="Professional Service" 
-              className="img-fluid mt-5 rounded-4 shadow"
+              className="landing-hero-image"
             />
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

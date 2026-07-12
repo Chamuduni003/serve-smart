@@ -11,7 +11,13 @@ const BookingModal = ({ show, onClose, provider, bookingDate, bookingTime }) => 
   const providerId = provider.user_id || provider.providerId || provider.providerid || provider.id;
 
   const handleConfirmBooking = async () => {
-    const clientId = localStorage.getItem('userId') || 1;
+    const clientId = Number(localStorage.getItem('userId'));
+
+    if (!Number.isInteger(clientId) || clientId <= 0) {
+      alert('Please sign in before creating a booking.');
+      navigate('/login');
+      return;
+    }
 
     if (!providerId || !bookingDate || !bookingTime) {
       alert('Please select a date and time before booking.');
@@ -21,7 +27,7 @@ const BookingModal = ({ show, onClose, provider, bookingDate, bookingTime }) => 
     try {
       setSaving(true);
       const response = await axios.post('http://localhost:5000/api/bookings', {
-        clientId: parseInt(clientId, 10),
+        clientId,
         providerId: parseInt(providerId, 10),
         bookingDate,
         bookingTime,

@@ -11,7 +11,12 @@ app.use(express.urlencoded({ extended: true }));
 const db = require('./db'); // db.js path
 
 app.use('/api/provider', providerRoutes);
-//app.use('/apibookings', bookingRoutes);
+// Keep one public bookings API.  The frontend and the other API routes all use
+// the `/api/...` prefix, so mounting this as `/apibookings` caused every booking
+// action to return 404.
+app.use('/api/bookings', bookingRoutes);
+
+// Temporary compatibility alias for any older saved frontend build.
 app.use('/apibookings', bookingRoutes);
 
 

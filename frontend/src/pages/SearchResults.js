@@ -3,7 +3,8 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard.css'; 
 const normalizeProvider = (provider) => ({
-  id: provider?.id ?? provider?.providerId ?? provider?.user_id,
+  // A booking needs the provider's user ID, not the provider_profiles row ID.
+  id: provider?.user_id ?? provider?.providerId ?? provider?.id,
   fullName: provider?.fullName || provider?.name || provider?.fullname || `Provider #${provider?.user_id || 0}`,
   category: provider?.category || provider?.profession || provider?.serviceCategory || 'Service',
   location: provider?.location || provider?.city || provider?.area || 'Not specified',

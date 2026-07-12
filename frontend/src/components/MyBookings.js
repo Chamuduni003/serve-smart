@@ -24,7 +24,7 @@ export default function MyBookings() {
   const fetchUserBookings = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/user/bookings/${clientId}`);
+      const response = await axios.get(`http://localhost:5000/api/bookings/my-bookings/${clientId}`);
       const rows = response.data?.bookings || response.data || [];
       setBookings(Array.isArray(rows) ? rows : []);
       setError('');

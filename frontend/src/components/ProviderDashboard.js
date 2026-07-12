@@ -1,26 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import './ProviderDashboard.css';
 
-const getStoredProvider = () => {
-  try {
-    const stored = localStorage.getItem('loggedInProvider');
-    return stored ? JSON.parse(stored) : null;
-  } catch (error) {
-    return null;
-  }
-};
-
-const getProviderId = (provider) => (
-  provider?.user_id ||
-  provider?.userId ||
-  provider?.id ||
-  localStorage.getItem('userId') ||
-  2
-);
-
 const normalizeBooking = (booking) => ({
   id: booking.id,
+  providerName: booking.providerName || booking.provider_name || 'Service Provider',
+  providerId: booking.providerId || booking.provider_id,
   clientName: booking.clientName || booking.client_name || 'Valued Client',
   clientEmail: booking.clientEmail || booking.client_email || '',
   clientLocation: booking.clientLocation || booking.client_location || 'Not specified',
@@ -31,22 +16,14 @@ const normalizeBooking = (booking) => ({
 });
 
 export default function ProviderDashboard() {
-  const [provider, setProvider] = useState(getStoredProvider() || { name: 'Service Provider' });
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
 
-  const providerId = useMemo(() => getProviderId(provider), [provider]);
-
   const fetchRequests = useCallback(async () => {
-    if (!providerId) {
-      setLoading(false);
-      return;
-    }
-
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/bookings/provider/${providerId}`);
+      const response = await axios.get('http://localhost:5000/api/bookings/all');
       const rows = Array.isArray(response.data) ? response.data : [];
       setRequests(rows.map(normalizeBooking));
       setMessage('');
@@ -56,13 +33,6 @@ export default function ProviderDashboard() {
       setRequests([]);
     } finally {
       setLoading(false);
-    }
-  }, [providerId]);
-
-  useEffect(() => {
-    const storedProvider = getStoredProvider();
-    if (storedProvider) {
-      setProvider(storedProvider);
     }
   }, []);
 
@@ -107,8 +77,8 @@ export default function ProviderDashboard() {
         <div className="p-sidebar-user">
           <div className="p-user-avatar">SP</div>
           <div className="p-user-info">
-            <h4>{provider.name || 'Service Provider'}</h4>
-            <p>ID #{providerId}</p>
+            <h4>Booking Manager</h4>
+            <p>All providers</p>
           </div>
         </div>
 
@@ -121,25 +91,36 @@ export default function ProviderDashboard() {
       </aside>
 
       <main className="p-dashboard-main">
+        <nav className="p-top-navbar" aria-label="Dashboard navigation">
+          <a className="p-top-brand" href="/provider-dashboard">
+            <span className="p-top-brand-mark">SS</span>
+            <span>Smart Service</span>
+          </a>
+          <div className="p-top-nav-links">
+            <a className="p-top-nav-link p-top-nav-link-active" href="/provider-dashboard">Dashboard</a>
+            <button className="p-top-nav-link" type="button" onClick={fetchRequests}>Refresh</button>
+            <a className="p-top-nav-link" href="/">Home</a>
+            <button className="p-top-logout" type="button" onClick={handleLogout}>Logout</button>
+          </div>
+        </nav>
+
         <header className="p-main-header">
-          <h1>Welcome back, {provider.name || 'Service Provider'}</h1>
-          <p className="p-current-date">Manage incoming service booking requests.</p>
+          <h1>Booking Requests</h1>
+          <p className="p-current-date">Review each provider's incoming service requests.</p>
         </header>
 
         <hr className="p-header-divider" />
 
-        <section className="row mb-4">
-          <div className="col-md-3">
-            <div className="card p-3 border-0 shadow-sm">
-              <p className="text-muted small mb-1">Pending Requests</p>
-              <h3 className="fw-bold mb-0">{pendingRequests.length}</h3>
-            </div>
+        <section className="p-summary-grid" aria-label="Booking summary">
+          <div className="p-summary-card p-summary-card-primary">
+            <span>Pending requests</span>
+            <strong>{pendingRequests.length}</strong>
+            <small>Waiting for a response</small>
           </div>
-          <div className="col-md-3">
-            <div className="card p-3 border-0 shadow-sm">
-              <p className="text-muted small mb-1">Total Bookings</p>
-              <h3 className="fw-bold mb-0">{requests.length}</h3>
-            </div>
+          <div className="p-summary-card">
+            <span>Total bookings</span>
+            <strong>{requests.length}</strong>
+            <small>All service requests</small>
           </div>
         </section>
 
@@ -165,10 +146,18 @@ export default function ProviderDashboard() {
                 </div>
 
                 <div className="p-card-body">
-                  <h4>{request.clientName}</h4>
-                  <p>{request.clientEmail || request.clientLocation}</p>
-                  <p><strong>Date:</strong> {request.bookingDate}</p>
-                  <p><strong>Time:</strong> {request.bookingTime}</p>
+                  <div className="p-person-row">
+                    <span className="p-person-avatar">{request.clientName.charAt(0).toUpperCase()}</span>
+                    <div>
+                      <h4>{request.clientName}</h4>
+                      <p>{request.clientEmail || request.clientLocation}</p>
+                    </div>
+                  </div>
+                  <div className="p-provider-line">Assigned to <strong>{request.providerName}</strong> <span>• ID #{request.providerId}</span></div>
+                  <div className="p-request-details">
+                    <div><span>Date</span><strong>{request.bookingDate}</strong></div>
+                    <div><span>Time</span><strong>{request.bookingTime}</strong></div>
+                  </div>
                 </div>
 
                 <div className="p-card-actions">

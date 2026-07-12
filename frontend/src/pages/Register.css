@@ -1,92 +1,73 @@
-/* ප්‍රධාන සුදු පැහැති කාඩ්පත */
+.register-wrapper { width: 100%; }
+
 .register-card {
-  background: #ffffff !important;
-  border-radius: 20px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-  border: none !important;
-  padding: 35px !important;
-  width: 100% !important;
-  max-width: 420px !important;
-  margin: auto !important;
-  box-sizing: border-box !important;
+  width: 100%;
+  max-width: 440px;
+  padding: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, .08);
 }
 
-/* අයිකනය සහ Input එක එක පේළියට තබා ගන්නා ප්‍රධාන කොටුව */
-.input-group {
-  display: flex !important; /* අයිකන සහ Input එක පේළියට ගැනීමට */
-  flex-direction: row !important; /* යටට වැටීම වළක්වයි */
-  align-items: stretch !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin-bottom: 18px !important;
-  box-sizing: border-box !important;
+.register-card h3 {
+  margin: 0 0 22px !important;
+  color: #13254a !important;
+  font-size: 1.45rem;
+  letter-spacing: -.03em;
 }
 
-/* වම් පස ඇති අයිකන කොටුව */
-.input-group-text {
-  background-color: #f8f9fa !important;
-  border: 1px solid #ced4da !important;
-  border-right: none !important; /* මැද සන්ධියේ border එක ඉවත් කරයි */
-  width: 45px !important;
-  min-width: 45px !important; /* කොටුව හැකිලීම වළක්වයි */
+.register-card .input-group {
   display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  border-top-left-radius: 8px !important;
-  border-bottom-left-radius: 8px !important;
-  box-sizing: border-box !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin-bottom: 15px !important;
 }
 
-/* දකුණු පස ඇති Input, Dropdown සහ Select කොටු සියල්ලම */
-.form-control, 
-select.form-control, 
-.input-group input, 
-.input-group select {
-  flex: 1 !important; 
-  width: 100% !important;
-  border: 1px solid #ced4da !important;
-  border-left: none !important; /* මැද සන්ධියේ border එක ඉවත් කරයි */
-  padding: 12px !important;
-  font-size: 14px !important;
-  border-top-right-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
-  border-top-left-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
-  background-color: #ffffff !important;
-  box-sizing: border-box !important;
+.register-card .input-group-text {
+  background-color: #f8fafc !important;
+    border: 1px solid #d7e0ec !important;
+    border-right: 0 !important;
+    border-radius: 9px 0 0 9px !important;
+    padding: 0 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-/* Dropdown/Select එකේ ඊතලය නිවැරදි කිරීමට */
-select.form-control {
-  appearance: auto !important;
-  -webkit-appearance: auto !important;
-  -moz-appearance: auto !important;
+.register-card .form-control,
+.register-card .form-select {
+    display: block !important;
+    width: 100% !important;
+    height: 46px !important;
+    padding: 6px 12px !important;
+    font-size: 0.9rem !important;
+    color: #1e293b !important;
+    background-color: #ffffff !important; /* පසුබිම සුදු පැහැති කිරීමට */
+    background-clip: padding-box !important;
+    border: 1px solid #d7e0ec !important; /* දේශ සීමාව පැහැදිලි කිරීමට */
+    border-left: 0 !important;
+    border-radius: 0 9px 9px 0 !important;
+    visibility: visible !important; /* අනිවාර්යයෙන්ම පෙන්වීමට */
 }
 
-/* Input එකක් මත click කළ විට */
-.form-control:focus, select.form-control:focus {
-  outline: none !important;
-  border-color: #86b7fe !important;
+.register-card .form-control:focus,
+.register-card .form-select:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, .12);
 }
 
-/* ලියාපදිංචි වීමේ නිල් පාට බොත්තම */
-.register-card .btn-primary, 
-.register-card button[type="submit"] {
-  width: 100% !important;
-  background-color: #0d6efd !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 10px !important;
-  padding: 12px !important;
-  font-weight: bold !important;
-  font-size: 16px !important;
-  cursor: pointer !important;
-  margin-top: 10px !important;
-  box-sizing: border-box !important;
-  transition: background 0.2s ease !important;
+.register-card .btn-primary {
+  min-height: 48px;
+  margin-top: 7px;
+  border: 0;
+  border-radius: 9px;
+  background: #2563eb;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, .2);
+  font-size: .93rem;
 }
+.register-card .btn-primary:hover { background: #1d4ed8; }
 
-.register-card .btn-primary:hover, 
-.register-card button[type="submit"]:hover {
-  background-color: #0b5ed7 !important;
+@media (max-width: 480px) {
+  .register-card { padding: 22px; }
 }
