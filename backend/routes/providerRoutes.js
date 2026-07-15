@@ -120,7 +120,9 @@ router.get('/bookings/:providerId', (req, res) => {
   });
 });
 
-// 4. Search available providers by service/category
+// 4. Search providers by service/category. Slot availability is checked from
+// bookings when the customer selects a date and time, not from a permanent
+// profile flag.
 router.get('/search', (req, res) => {
   const service = (req.query.service || '').toString().trim();
 
@@ -135,8 +137,7 @@ router.get('/search', (req, res) => {
       pp.profile_pic
     FROM provider_profiles pp
     JOIN users u ON u.user_id = pp.user_id
-    WHERE u.role = 'provider'
-    AND pp.is_available = 1
+    WHERE LOWER(u.role) = 'provider'
   `;
 
   const values = [];
@@ -159,7 +160,8 @@ router.get('/search', (req, res) => {
   });
 });
 
-// 5. Available providers for the dashboard
+// 5. Providers for the dashboard. A past booking must not hide a provider for
+// every future date, so do not filter this list by `is_available`.
 router.get('/available-providers', (req, res) => {
   const service = (req.query.service || req.query.category || '').toString().trim();
 
@@ -176,7 +178,7 @@ router.get('/available-providers', (req, res) => {
       pp.is_available
     FROM provider_profiles pp
     LEFT JOIN users u ON u.user_id = pp.user_id
-    WHERE pp.is_available = 1
+    WHERE (u.role IS NULL OR LOWER(u.role) = 'provider')
   `;
 
   const values = [];

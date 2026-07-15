@@ -1,0 +1,86 @@
+.booking-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(5px);
+}
+
+.booking-modal {
+  position: relative;
+  width: min(100%, 540px);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 30px;
+  border: 1px solid #dbe5f1;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.28);
+  color: #172033;
+}
+
+.booking-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.booking-modal-header { padding-right: 34px; }
+.booking-modal-eyebrow { color: #2563eb; font-size: .72rem; font-weight: 800; letter-spacing: .09em; }
+.booking-modal-header h4 { margin: 7px 0 6px; color: #0f172a; font-size: 1.45rem; font-weight: 750; }
+.booking-modal-header p { margin: 0; color: #64748b; font-size: .9rem; }
+
+.booking-steps { display: flex; align-items: flex-start; margin: 26px 0 22px; }
+.booking-step { display: grid; gap: 5px; justify-items: center; color: #94a3b8; font-size: .72rem; font-weight: 700; text-align: center; }
+.booking-step span { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: #e2e8f0; color: #64748b; }
+.booking-step.active { color: #1d4ed8; }
+.booking-step.active span { background: #2563eb; color: #fff; }
+.booking-step-line { flex: 1; height: 2px; margin: 13px 10px 0; background: #dbe5f1; }
+
+.booking-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 17px; border: 1px solid #e2e8f0; border-radius: 14px; background: #f8fafc; }
+.booking-summary div { min-width: 0; }
+.booking-summary span, .booking-summary strong { display: block; }
+.booking-summary span { margin-bottom: 3px; color: #64748b; font-size: .72rem; font-weight: 600; }
+.booking-summary strong { overflow: hidden; color: #1e293b; font-size: .88rem; text-overflow: ellipsis; white-space: nowrap; }
+
+.payment-options { display: grid; gap: 10px; margin-top: 20px; }
+.payment-option { display: flex; align-items: center; gap: 12px; padding: 13px; border: 1px solid #dbe5f1; border-radius: 12px; cursor: pointer; transition: .15s ease; }
+.payment-option:hover { border-color: #93c5fd; background: #f8fbff; }
+.payment-option.selected { border-color: #2563eb; background: #eff6ff; box-shadow: 0 0 0 3px rgba(37, 99, 235, .09); }
+.payment-option input { accent-color: #2563eb; }
+.payment-option-icon { display: grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; border-radius: 9px; background: #dbeafe; color: #1d4ed8; font-weight: 800; }
+.payment-option strong, .payment-option small { display: block; }
+.payment-option strong { color: #1e293b; font-size: .88rem; }
+.payment-option small { margin-top: 2px; color: #64748b; font-size: .75rem; }
+.payment-note { margin: 2px 0 0; color: #64748b; font-size: .76rem; line-height: 1.45; }
+
+.booking-modal-actions { display: flex; gap: 12px; margin-top: 26px; }
+.booking-modal-actions button { flex: 1; min-height: 44px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+.booking-secondary-button { border: 1px solid #cbd5e1; background: #fff; color: #475569; }
+.booking-primary-button { border: 1px solid #2563eb; background: #2563eb; color: #fff; }
+.booking-primary-button:hover { background: #1d4ed8; }
+.booking-modal-actions button:disabled, .booking-modal-close:disabled { cursor: not-allowed; opacity: .6; }
+
+.booking-success-panel { text-align: center; padding: 8px 0 2px; }
+.booking-success-icon { display: grid; width: 62px; height: 62px; place-items: center; margin: 0 auto 18px; border-radius: 50%; background: #dcfce7; color: #15803d; font-size: 2rem; font-weight: 800; }
+.booking-success-panel h4 { margin: 7px 0 8px; color: #0f172a; font-size: 1.48rem; font-weight: 750; }
+.booking-success-panel > p { max-width: 380px; margin: 0 auto 22px; color: #64748b; font-size: .9rem; line-height: 1.5; }
+.booking-success-summary { text-align: left; }
+
+@media (max-width: 480px) {
+  .booking-modal { padding: 24px 18px; }
+  .booking-summary { grid-template-columns: 1fr; gap: 10px; }
+}

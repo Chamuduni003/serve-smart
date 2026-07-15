@@ -34,19 +34,19 @@ const ProviderRegister = () => {
         setLoading(true);
         setSuccess('Profile details saved successfully! Redirecting...');
 
-        // 💾 ඩෑෂ්බෝඩ් එක ඇතුළේ වැඩ කරන්න අවශ්‍ය LocalStorage දත්ත ටික තාවකාලිකව දාගන්නවා
-        localStorage.setItem('userId', '2'); // 👈 ඔයාට ඕනෙම Test ID එකක් මෙතනට දාන්න පුළුවන් (e.g., '2')
+        
+        localStorage.setItem('userId', '2'); 
         localStorage.setItem('userRole', 'provider');
         localStorage.setItem('userName', 'Service Provider');
 
-        // ⏱️ තත්පර 1ක් ඇතුළත කෙලින්ම Provider Dashboard එකට රීඩිරෙක්ට් වෙනවා
+        
         setTimeout(() => {
             setLoading(false);
             navigate('/provider-dashboard'); 
         }, 1000);
     };
 
-    // ප්‍රධාන කාණ්ඩ ලැයිස්තුව
+    
     const categories = [
         'Plumbing', 'Electrical', 'Cleaning', 'Carpentry', 'Painting', 
         'Gardening', 'Appliance Repair', 'Tutoring', 'Other'

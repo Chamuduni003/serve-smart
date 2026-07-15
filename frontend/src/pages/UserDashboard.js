@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'; 
 import { FaHome, FaBriefcase, FaDollarSign, FaTools, FaMapMarkerAlt, FaSignOutAlt, FaUser, FaCalendarCheck } from 'react-icons/fa';
 import './UserDashboard.css';
@@ -52,6 +52,8 @@ function UserDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [bookingInputs, setBookingInputs] = useState({});
+  const [slotAvailability, setSlotAvailability] = useState({});
+  const availabilityRequestIds = useRef({});
 
   const fetchProviders = async (serviceQuery = '', locationQuery = '') => {
     setLoading(true);
@@ -80,12 +82,44 @@ function UserDashboard() {
     fetchProviders(parsedService, parsedLocation);
   };
 
+  const checkSlotAvailability = async (providerId, date, time) => {
+    const requestId = (availabilityRequestIds.current[providerId] || 0) + 1;
+    availabilityRequestIds.current[providerId] = requestId;
+
+    if (!date || !time) {
+      setSlotAvailability(prev => ({ ...prev, [providerId]: { status: 'idle' } }));
+      return;
+    }
+
+    setSlotAvailability(prev => ({ ...prev, [providerId]: { status: 'checking' } }));
+    try {
+      const response = await axios.get('http://localhost:5000/api/bookings/availability', {
+        params: { providerId, date, time }
+      });
+      if (availabilityRequestIds.current[providerId] !== requestId) return;
+
+      setSlotAvailability(prev => ({
+        ...prev,
+        [providerId]: { status: response.data.available ? 'available' : 'unavailable' }
+      }));
+    } catch (err) {
+      console.error('Error checking provider availability:', err);
+      if (availabilityRequestIds.current[providerId] === requestId) {
+        setSlotAvailability(prev => ({ ...prev, [providerId]: { status: 'error' } }));
+      }
+    }
+  };
+
   const handleInputChange = (providerId, field, value) => {
+    const nextInputs = { ...bookingInputs[providerId], [field]: value };
     setBookingInputs(prev => ({
       ...prev,
-      [providerId]: { ...prev[providerId], [field]: value }
+      [providerId]: nextInputs
     }));
+    checkSlotAvailability(providerId, nextInputs.date, nextInputs.time);
   };
+
+  const today = new Date().toISOString().split('T')[0];
 
   // 🚪 Logout Functionality
   const handleLogout = () => {
@@ -163,7 +197,7 @@ function UserDashboard() {
         ) : (
           <div className="full-page-providers-grid">
             {providers.map((provider, index) => (
-              <div className="provider-vertical-card" key={index}>
+              <div className="provider-vertical-card" key={provider.id || index}>
                 
                 {/* Profile Avatar & Name */}
                 <div className="card-avatar-wrapper">
@@ -190,6 +224,7 @@ function UserDashboard() {
                     <input
                       type="date"
                       className="input-element"
+                      min={today}
                       value={bookingInputs[provider.id]?.date || ''}
                       onChange={(e) => handleInputChange(provider.id, 'date', e.target.value)}
                     />
@@ -205,16 +240,30 @@ function UserDashboard() {
                   </div>
                 </div>
 
+                {slotAvailability[provider.id]?.status === 'checking' && (
+                  <p className="slot-status checking">Checking availability...</p>
+                )}
+                {slotAvailability[provider.id]?.status === 'available' && (
+                  <p className="slot-status available">Available for this date and time</p>
+                )}
+                {slotAvailability[provider.id]?.status === 'unavailable' && (
+                  <p className="slot-status unavailable">Not available for this date and time</p>
+                )}
+                {slotAvailability[provider.id]?.status === 'error' && (
+                  <p className="slot-status unavailable">Unable to verify availability. Please try again.</p>
+                )}
+
                 {/* Booking Button */}
                 <div className="card-action-wrapper">
                   <button 
                     className="full-card-book-btn" 
+                    disabled={['checking', 'unavailable', 'error'].includes(slotAvailability[provider.id]?.status)}
                     onClick={() => {
                       setSelectedProvider(provider);
                       setShowModal(true);
                     }}
                   >
-                    Book Now
+                    {slotAvailability[provider.id]?.status === 'unavailable' ? 'Not Available' : 'Book Now'}
                   </button>
                 </div>
 

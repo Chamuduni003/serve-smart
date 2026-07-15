@@ -11,7 +11,7 @@
 
 .login-card {
     width: 400px;
-    background-color: rgba(255, 255, 255, 0.95); /* ටිකක් transparent ගතියක් එන්න */
+    background-color: rgba(255, 255, 255, 0.95); 
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -36,7 +36,7 @@
 .form-control {
     width: 100% !important;
     padding: 12px !important;
-    border: 1px solid #ced4da !important; /* දේශ සීමාව පැහැදිලි කිරීම */
+    border: 1px solid #ced4da !important; 
     border-radius: 8px !important;
     display: block !important;
     background-color: #ffffff !important;

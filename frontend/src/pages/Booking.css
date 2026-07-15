@@ -1,7 +1,7 @@
 /* පිටුවේ Gradient Background එක */
 .booking-wrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,13 +17,43 @@
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-.btn-success {
-  background: #28a745 !important;
-  border: none;
-  transition: transform 0.2s;
+.booking-page-eyebrow {
+  color: #2563eb;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .1em;
 }
 
-.btn-success:hover {
-  transform: scale(1.02);
-  background: #218838 !important;
+.booking-page-primary {
+  background: #2563eb !important;
+  border: none !important;
 }
+
+.booking-page-primary:hover { background: #1d4ed8 !important; }
+
+.booking-page-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 13px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: .9rem;
+}
+
+.booking-page-payment {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 13px;
+  margin-bottom: 10px;
+  border: 1px solid #dbe5f1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.booking-page-payment.selected { border-color: #2563eb; background: #eff6ff; }
+.booking-page-payment input { accent-color: #2563eb; }
+.booking-page-payment strong, .booking-page-payment small { display: block; }
+.booking-page-payment small { margin-top: 2px; color: #64748b; font-size: .76rem; }
+.booking-page-note { color: #64748b; font-size: .8rem; }

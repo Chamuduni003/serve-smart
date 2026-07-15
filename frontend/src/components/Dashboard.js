@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
   const navigate = useNavigate();
-  // සේවා සපයන්නන්ගේ දත්ත ගබඩා කිරීමට state එක
+  
   const [providers, setProviders] = useState([
     
     { id: 1, name: "John Plumbing", category: "Plumbing", location: "Colombo", rating: 4.8 },

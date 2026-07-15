@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaUser, FaEnvelope, FaLock, FaMapMarkerAlt, FaUserTag } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import './Register.css'; // ඔබ කලින් හදාගත් CSS ගොනුව මෙතන import කරන්න
-
+import './Register.css'; 
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ 

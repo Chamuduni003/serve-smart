@@ -118,6 +118,10 @@ export default function MyBookings() {
                     <span className="text-muted">Time</span>
                     <span className="fw-medium text-dark">{booking.bookingTime}</span>
                   </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <span className="text-muted">Payment</span>
+                    <span className="fw-medium text-dark">{booking.paymentMethod || 'Cash after service'}</span>
+                  </div>
                   <div className="d-flex justify-content-between">
                     <span className="text-muted">Booking ID</span>
                     <span className="fw-medium text-dark"># {booking.id}</span>
