@@ -74,3 +74,17 @@
   .landing-form-column, .landing-hero-column { padding: 34px 20px; }
   .landing-hero-content h1 { font-size: 2.25rem; }
 }
+.landing-login-button {
+  margin: 12px 0 20px;
+  padding: 12px 28px;
+  border: 0;
+  border-radius: 8px;
+  background: #1769ff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.landing-login-button:hover {
+  background: #0956dc;
+}
