@@ -3,14 +3,14 @@ import axios from 'axios';
 
 export default function Profile() {
   const [bookingHistory, setBookingHistory] = useState([]);
-  const [userDetails, setUserDetails] = useState(null); // 👤 User විස්තර තබා ගැනීමට
+  const [userDetails, setUserDetails] = useState(null); // 👤 User details
   
-  // 📑 දැනට ලොග් වෙලා ඉන්න User ගේ ID එක localStorage එකෙන් ගැනීම
+  // 📑 loging UserID from localStorage 
   const rawClientId = localStorage.getItem('userId');
   const clientId = rawClientId ? parseInt(rawClientId) : 1;
 
   useEffect(() => {
-    // 1️⃣ User ගේ පෞද්ගලික විස්තර Backend එකෙන් ලබාගැනීම
+    // 1️⃣ User details from  Backend 
     const fetchUserDetails = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/bookings/user-details/${clientId}`);
@@ -20,7 +20,7 @@ export default function Profile() {
       }
     };
 
-    // 2️⃣ User ගේ බුකින් හිස්ට්‍රිය ලබාගැනීම
+    // 2️⃣ User bokking history from backend
     const fetchBookingHistory = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/bookings/user-history/${clientId}`);
@@ -45,7 +45,7 @@ export default function Profile() {
           </h3>
           
           {userDetails ? (
-            // 📑 ඩේටාබේස් එකෙන් දත්ත ආවම පේන ලස්සන Layout එක
+            // 📑 data layout
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', backgroundColor: '#fdfdfd', padding: '20px', borderRadius: '8px', border: '1px solid #eee' }}>
               <div>📌 <b>Full Name:</b> <span style={{ color: '#555', marginLeft: '5px' }}>{userDetails.name}</span></div>
               <div>📧 <b>Email Address:</b> <span style={{ color: '#555', marginLeft: '5px' }}>{userDetails.email}</span></div>
