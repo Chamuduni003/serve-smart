@@ -43,12 +43,12 @@
     padding: 6px 12px !important;
     font-size: 0.9rem !important;
     color: #1e293b !important;
-    background-color: #ffffff !important; /* පසුබිම සුදු පැහැති කිරීමට */
+    background-color: #ffffff !important; /* white bg */
     background-clip: padding-box !important;
-    border: 1px solid #d7e0ec !important; /* දේශ සීමාව පැහැදිලි කිරීමට */
+    border: 1px solid #d7e0ec !important; /*  */
     border-left: 0 !important;
     border-radius: 0 9px 9px 0 !important;
-    visibility: visible !important; /* අනිවාර්යයෙන්ම පෙන්වීමට */
+    visibility: visible !important; /* imp */
 }
 
 .register-card .form-control:focus,
