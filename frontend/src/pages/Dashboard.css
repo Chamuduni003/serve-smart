@@ -1,4 +1,4 @@
-/* මුළු පිටුවේම Layout එක සකස් කිරීම */
+/* Layout */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,13 +7,13 @@
 }
 
 .ud-dashboard-container {
-  display: flex; /* වම් පැත්ත සහ දකුණු පැත්ත දෙකට බෙදීමට */
+  display: flex; /* left and right */
   min-height: 100vh;
   background-color: #f4f6f9;
 }
 
 /* ==========================================================================
-   1. වම් පැත්තේ තද අළු/කළු පාට Sidebar එක (Left Sidebar)
+   1. (Left Sidebar)
    ========================================================================== */
 .ud-sidebar {
   width: 260px;
@@ -22,7 +22,7 @@
   display: flex;
   flex-direction: column;
   padding: 25px 20px;
-  position: fixed; /* Sidebar එක එකම තැන රඳවා තැබීමට */
+  position: fixed; /* Sidebar */
   height: 100vh;
 }
 
@@ -64,11 +64,11 @@
 }
 
 .ud-sidebar-footer {
-  margin-top: auto; /* Logout එක පහළටම තල්ලු කිරීමට */
+  margin-top: auto; /* Logout  */
 }
 
 .ud-logout {
-  color: #fc8181; /* රතු පැහැයට හුරු පාටක් */
+  color: #fc8181; /* red */
 }
 
 .ud-logout:hover {
@@ -77,11 +77,11 @@
 }
 
 /* ==========================================================================
-   2. දකුණු පැත්තේ Main Content එක (Right Panel)
+   2. Main Content  (Right Panel)
    ========================================================================== */
 .ud-main-content {
   flex: 1;
-  margin-left: 260px; /* Sidebar එකට ඉඩ තබා ඉතිරි කොටස ගැනීමට */
+  margin-left: 260px; /* Sidebar */
   padding: 40px;
 }
 
@@ -109,12 +109,12 @@
   font-weight: 600;
 }
 
-/* කාඩ්ස් 4 Grid එකකට පෙළගැස්වීම (පේලි දෙකකට ලස්සනට එනවා) */
+/* 4 Grid */
 .ud-services-grid {
-  display: flex;             /* Grid එක වෙනුවට Flexbox පාවිච්චි කරමු */
-  flex-direction: row;       /* එක පේළියට හරස් අතට පෙළගැස්වීම */
-  gap: 20px;                 /* කාඩ්ස් අතර පරතරය */
-  flex-wrap: wrap;           /* Screen එක මදි වුණොත් විතරක් ඊළඟ පේළියට යන්න */
+  display: flex;             /* Grid Flexbox  */
+  flex-direction: row;       /* */
+  gap: 20px;                 /* cards range*/
+  flex-wrap: wrap;           /* Screen  */
   align-items: stretch;
   width: 100%;
 }
@@ -128,10 +128,10 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   border: 1px solid #edf2f7;
   
-  /* මේකෙන් කාඩ්ස් 4ම එක සමානව හරස් අතට බෙදිලා යනවා */
+  /* 4cards*/
   flex: 1;                   
-  min-width: 200px;          /* කුඩාම ප්‍රමාණය */
-  max-width: 250px;          /* උපරිම පළල සීමා කිරීම */
+  min-width: 200px;          /*smallest */
+  max-width: 250px;          /* width */
   
   display: flex;
   flex-direction: column;
@@ -151,7 +151,7 @@
   font-weight: 600;
 }
 
-/* නිල් පාට View බටන් එක */
+/*View button*/
 .ud-view-btn {
   background-color: #007bff;
   color: #fff;
@@ -169,7 +169,7 @@
 .ud-view-btn:hover {
   background-color: #0056b3;
 }
-/* Search result එකේ providersලාගේ grid එක */
+/* Search result grid */
 .ud-services-grid {
   display: flex;
   flex-direction: row;
