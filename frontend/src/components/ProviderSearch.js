@@ -10,14 +10,14 @@ function ProviderSearch() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // URL එකෙන් category එක වෙන් කර ගැනීම (උදා: ?category=Plumber -> 'Plumber')
+  // (උදා: ?category=Plumber -> 'Plumber')
   const queryParams = new URLSearchParams(location.search);
   const selectedCategory = queryParams.get('category');
 
   useEffect(() => {
     if (selectedCategory) {
       setLoading(true);
-      // Backend filter API එකට කතා කිරීම
+      // Backend filter API 
       axios.get(`http://localhost:5000/api/providers/filter?category=${selectedCategory}`)
         .then(res => {
           setProviders(res.data);
