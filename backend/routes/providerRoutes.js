@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// 1. Provider Profile එක Register කරන API එක
+
 router.post('/register', (req, res) => {
   const {
     user_id,
