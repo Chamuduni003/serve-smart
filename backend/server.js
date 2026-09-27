@@ -38,7 +38,7 @@ app.post('/login', (req, res) => {
 // USER REGISTER API
 // ==========================================
 app.post('/api/auth/register', (req, res) => {
-    console.log("ලැබුණු දත්ත (Request Body):", req.body); 
+    console.log(" (Request Body):", req.body); 
     
     const { name, email, password, role, location } = req.body;
 
@@ -48,7 +48,7 @@ app.post('/api/auth/register', (req, res) => {
 
     const normalizedRole = (role || 'client').toString().toLowerCase();
 
-    // 1. මුලින්ම මෙම Email එක දැනටමත් තිබේදැයි බලන්න
+   
     const checkSql = 'SELECT * FROM users WHERE email = ?';
     db.query(checkSql, [email], (checkErr, existingUsers) => {
         if (checkErr) {
@@ -60,7 +60,7 @@ app.post('/api/auth/register', (req, res) => {
             return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
         }
 
-        // 2. Email එක නැත්නම් පමණක් Insert කරන්න
+       
         const insertSql = 'INSERT INTO users (name, email, password, role, location) VALUES (?, ?, ?, ?, ?)';
         db.query(insertSql, [name, email, password, normalizedRole, location || ''], (insertErr, result) => {
             if (insertErr) {
@@ -140,7 +140,7 @@ app.get('/api/providers', (req, res) => {
 });
 
 // ==========================================
-// 🚨 PROVIDER PROFILE DETAILS ලබාගැනීමේ API එක
+// 🚨 PROVIDER PROFILE DETAILS API
 // ==========================================
 app.get('/api/provider/profile/:userId', (req, res) => {
   const userId = req.params.userId;
@@ -163,15 +163,15 @@ app.get('/api/provider/profile/:userId', (req, res) => {
 
 
 // ==========================================
-// 🔍 PROVIDER SEARCH API (සේවා සපයන්නන් සෙවීම)
+// 🔍 PROVIDER SEARCH API
 // ==========================================
 app.get('/api/providers/search', (req, res) => {
   const { category, location } = req.query;
 
-  // කාණ්ඩය සහ ස්ථානය අනුව, දැනට වැඩ කිරීමට සූදානම් (is_available = 1) අය පමණක් සෙවීම
+  (is_available = 1) 
   const sql = `SELECT * FROM provider_profiles WHERE category = ? AND location LIKE ? AND is_available = 1`;
   
-  // % සලකුණ යෙදීමෙන් පරිශීලකයා ලොකේෂන් එක හරියටම නැතුව Colombo කියා ගැහුවත් Colombo 03 වැනි දත්තද අසුවේ (LIKE Query)
+ 
   db.query(sql, [category, `%${location}%`], (err, results) => {
     if (err) {
       console.error("Search Error:", err);
@@ -182,7 +182,7 @@ app.get('/api/providers/search', (req, res) => {
 });
 
 
-// Database එකේ තියෙන Categories ලැයිස්තුව Unique විදියට ලබා දෙන API එක
+
 app.get('/api/categories', (req, res) => {
   const sql = "SELECT DISTINCT category FROM provider_profiles WHERE category IS NOT NULL AND category != ''";
   
@@ -191,7 +191,7 @@ app.get('/api/categories', (req, res) => {
       console.error("Error fetching categories:", err);
       return res.status(500).json({ error: "Database error occurred" });
     }
-    // ලැබෙන results array එකක් නිසා ඒක කෙළින්ම frontend එකට යවනවා
+    
     // උදා: ["Plumbing", "Painting", "Electrical"]
     const categories = results.map(row => row.category);
     res.json(categories);
