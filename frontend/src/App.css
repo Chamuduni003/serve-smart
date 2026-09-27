@@ -1,4 +1,4 @@
-/* App.css - මෙය අලුත් පෙනුම */
+/* App.css - new look*/
 .auth-container {
   display: flex;
   justify-content: center;
@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 
-/* බොත්තම් දෙකම එකම ප්‍රමාණයකට සහ පෙනුමකට */
+/* same buttons*/
 .btn-style {
   padding: 10px 24px;
   font-size: 16px;
@@ -43,25 +43,25 @@
   margin-right: 10px;
 }
 
-/* Get Started - නිල් පැහැය */
+/* Get Started - blue */
 .btn-filled {
   background-color: #007bff;
   color: white;
 }
 
-/* Sign UP - සුදු පැහැය */
+/* Sign UP -white */
 .btn-outline {
   background-color: white;
   color: #007bff;
 }
 
 .action-button {
-  padding: 10px 25px;       /* බොත්තමේ ප්‍රමාණය */
-  background-color: #007bff; /* නිල් වර්ණය */
-  color: white;             /* අකුරු සුදු වර්ණය */
+  padding: 10px 25px;       /* btnSize */
+  background-color: #007bff; /* blue*/
+  color: white;             /* letters */
   border: none;
   border-radius: 5px;
-  text-decoration: none;    /* Link එකේ යටින් ඉර ඉවත් කරයි */
+  text-decoration: none;    /* Link */
   display: inline-block;
   cursor: pointer;
   font-size: 16px;
