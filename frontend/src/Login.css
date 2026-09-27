@@ -32,7 +32,7 @@
 .login-btn:hover {
     background-color: #0b5ed7;
 }
-/* පෙට්ටි වල පෙනුම */
+/* box */
 .form-control {
     width: 100% !important;
     padding: 12px !important;
@@ -44,7 +44,7 @@
     margin-top: 5px !important;
 }
 
-/* ලේබල් වල පෙනුම */
+/* lable */
 .form-label {
     display: block;
     font-weight: 500;
@@ -52,7 +52,7 @@
     margin-bottom: 0.5rem;
 }
 
-/* බොත්තම */
+/* buttons */
 .btn-primary {
     width: 100%;
     padding: 12px;
