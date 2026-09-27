@@ -6,7 +6,7 @@ import './ProviderRegister.css';
 const ProviderRegister = () => {
     const navigate = useNavigate();
 
-    // පෝරමයේ දත්ත සඳහා state
+  
     const [formData, setFormData] = useState({
         experience: '',
         rate: '',
@@ -19,7 +19,7 @@ const ProviderRegister = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState('');
 
-    // Input වෙනස් වන විට state යාවත්කාලීන කිරීම
+    
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData(prevState => ({
@@ -28,7 +28,6 @@ const ProviderRegister = () => {
         }));
     };
 
-    // පෝරමය Submit කිරීම
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
