@@ -2,7 +2,7 @@ const express = require('express');
 const db = require('../db');
 const router = express.Router();
 
-// සියලුම සේවාවන් ලබා ගැනීම (Dropdown එකට පෙන්වීමට)
+
 router.get('/', async (req, res) => {
     try {
         const [services] = await db.query('SELECT * FROM Services');
